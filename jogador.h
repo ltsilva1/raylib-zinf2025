@@ -5,5 +5,5 @@
 #ifndef JOGADOR_H
 #define JOGADOR_H
 
-void jogadorViado(x, y);
+void mexeJogador();
 #endif //JOGADOR_H

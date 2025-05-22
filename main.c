@@ -3,13 +3,19 @@
 #include "raylib.h"
 
 #define LARGURA 1200
-#define ALTURA 860
+#define ALTURA 800
 #define CASA 50
 //pinto
 
 int main() {
     Rectangle jogador = { 300, 300, CASA, CASA }; // x, y, width, height
     Rectangle parede = { 600, 600, CASA, CASA }; // x, y, width, height
+    Rectangle inimigo = { 150, 150, CASA, CASA }; // x, y, width, height
+        char mapa[16][24];
+        mapa[0][0] = 'P';
+        mapa[0][1] = 'P';       mapa[1][1] = 'P';
+
+
 
     InitWindow(LARGURA, ALTURA, "Teclas"); //Inicializa janela, com certo tamanho e titulo
     SetWindowTitle("Quadrado"); // Define o título da janela
@@ -52,8 +58,24 @@ int main() {
     	// Atualiza o que eh mostrado na tela a partir do estado do jogo
     	BeginDrawing(); //Inicia o ambiente de desenho na tela
     	ClearBackground(RAYWHITE); //Limpa a tela e define cor de fundo
-        DrawRectangleRec(jogador, GREEN); // Desenha o retângulo na posição atual
-        DrawRectangleRec(parede, RED); // Desenha outro quadrado
+            for (int i = 0; i < 16; i++) {
+                    for (int j = 0; j < 24; j++) {
+                            if (mapa[j][i] == 'P') {
+                                    parede.x = i*CASA;
+                                    parede.y = j*CASA;
+
+                            }
+                            if (mapa[j][i] == 'J')
+                                    DrawRectangleRec(jogador, GREEN);
+                            if (mapa[j][i] == 'I') {
+
+                            }
+
+                    }
+            }
+            DrawRectangleRec(jogador, GREEN);
+            DrawRectangleRec(inimigo, RED);
+            DrawRectangleRec(parede, BROWN);
 	EndDrawing(); //Finaliza o ambiente de desenho na tela
     }
 
