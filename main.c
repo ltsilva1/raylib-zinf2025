@@ -5,7 +5,7 @@
 #define LARGURA 1200
 #define ALTURA 860
 #define CASA 50
-
+//pinto
 
 int main() {
     Rectangle jogador = { 300, 300, CASA, CASA }; // x, y, width, height
