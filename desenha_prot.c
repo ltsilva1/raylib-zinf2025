@@ -28,7 +28,7 @@ void desenhaJogo(Jogo* meuJogo) {
             }
         }
     }
-    DrawRectangle(meuJogo->jogador.pos.y * CASA, meuJogo->jogador.pos.x * CASA, CASA, CASA, GREEN);
+    DrawRectangle(meuJogo->jogador.pos.x * CASA, meuJogo->jogador.pos.y * CASA, CASA, CASA, GREEN);
 }
 
 

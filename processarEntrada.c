@@ -18,8 +18,8 @@ void processarEntrada(Jogo *jogo) {
 }
 
 void moveJogador(Jogador* jogador, /*MAPA AQUI*/ int direcaoX, int direcaoY) {
-    jogador->pos.x += direcaoY;
-    jogador->pos.y += direcaoX;
+    jogador->pos.x += direcaoX;
+    jogador->pos.y += direcaoY;
 
 
     

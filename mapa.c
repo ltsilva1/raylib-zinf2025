@@ -13,7 +13,7 @@ void carregaMapa (Jogo* meuJogo) {
     }
 
     for (int i = 0; i < 16; i++) {
-        fgets(meuJogo->mapa.mapa[i], 24+2, f);  // lê até 24 caracteres + '\0'
+        fgets(meuJogo->mapa.mapa[i], 24+2, f);  // lê até 24 caracteres + '\n' + '\0'
     }
     fclose(f);
 
