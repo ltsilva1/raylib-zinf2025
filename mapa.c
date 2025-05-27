@@ -17,8 +17,8 @@ void carregaMapa (Jogo* meuJogo) {
     }
     fclose(f);
 
+    //Testa processamento do mapa
     for (int i = 0; i < 16; i++) {
-        // Imprime linha como string
         for (int j = 0; j < 24; j++) {
             char c = meuJogo->mapa.mapa[i][j];
             if (c == '\n' || c == '\0')

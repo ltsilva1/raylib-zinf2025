@@ -3,6 +3,8 @@
 #include "definicoes.h"
 
 void desenhaJogo(Jogo* meuJogo) {
+    BeginDrawing(); //Inicia o ambiente de desenho na tela
+    ClearBackground(RAYWHITE); //Limpa a tela e define cor de fundo
     for (int i = 0; i < 16; i++) {
         for (int j = 0; j < 25; j++) {
             switch (meuJogo->mapa.mapa[i][j]) {

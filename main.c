@@ -3,33 +3,30 @@
 #include <stdlib.h>
 #include "raylib.h"
 #include "definicoes.h"
-#include "mapa.h"
+#include "startup.h"
 #include "desenha_prot.h"
 #include "processarEntrada.h"
+#include "logica.h"
 
 int main() {
-	Jogo meuJogo;
+	Jogo ZINF;
 
-	InitWindow(LARGURA, ALTURA, "Teclas"); //Inicializa janela, com certo tamanho e titulo
-	SetWindowTitle("Quadrado"); // Define o título da janela
+	InitWindow(LARGURA, ALTURA, "Morde & Assopra"); //Inicializa janela, com certo tamanho e titulo
 	SetTargetFPS(60);// Ajusta a janela para 60 frames por segundo
+
+	Inicializar(&ZINF);
 
 	//Este laco repete enquanto a janela nao for fechada
 	//Utilizamos ele para atualizar o estado do programa / jogo
-	char mapa[16][25];
-
-	carregaMapa(&meuJogo);
-	meuJogo.jogador.pos.x = 7;
-	meuJogo.jogador.pos.y = 7;
-
-
 		while (!WindowShouldClose()) {
 			BeginDrawing(); //Inicia o ambiente de desenho na tela
 			ClearBackground(RAYWHITE); //Limpa a tela e define cor de fundo
 
-			processarEntrada(&meuJogo);
+			processarEntrada(&ZINF);
 
-			desenhaJogo(&meuJogo);
+			//processarLogica(&meuJogo);
+
+			desenhaJogo(&ZINF);
 
 			EndDrawing(); //Finaliza o ambiente de desenho na tela
 		}
