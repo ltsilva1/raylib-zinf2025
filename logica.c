@@ -4,8 +4,10 @@
 
 #include "logica.h"
 
+#include "monstro.h"
+
 
 void processarLogica(Jogo *jogo) {
-    moveMonstro()
+    moveMonstro(jogo->monstro, 10, &jogo->mapa);
 
 }

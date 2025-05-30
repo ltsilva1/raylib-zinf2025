@@ -31,6 +31,9 @@ void desenhaJogo(Jogo* meuJogo) {
         }
     }
     DrawRectangle(meuJogo->jogador.pos.x * CASA, meuJogo->jogador.pos.y * CASA, CASA, CASA, GREEN);
+    //DrawRectangle(meuJogo->monstro[0].pos.x * CASA, meuJogo->monstro[0].pos.y * CASA, CASA, CASA, RED);
+    EndDrawing(); //Finaliza o ambiente de desenho na tela
+    //DrawRectangle( 0, 0, 100, 100, RED
 }
 
 

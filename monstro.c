@@ -1,7 +1,37 @@
 //
 // Created by Panerai on 30/05/2025.
 //
+#include <time.h>
+#include <stdlib.h>
 
 #include "monstro.h"
+#include "definicoes.h"
+#include "processarEntrada.h"
 
-void moveMonstro(Jogador* jogador, Mapa* mapa, int direcaoX, int direcaoY);
+void moveMonstro(Monstro monstro[], int qtd_monstros, Mapa* mapa) {
+    srand(time(NULL));
+    for (int i = 0; i < qtd_monstros; i++) {
+        int novaDirRand = rand() % 4; // 0:N, 1:S, 2:L, 3:O
+        int deltaX = 0, deltaY = 0;
+
+        switch (novaDirRand) {
+            case 0: deltaY = -1; break;
+            case 1: deltaY = 1; break;
+            case 2: deltaX = 1; break;
+            case 3: deltaX = -1; break;
+        }
+
+        int proximoX = monstro[i].pos.x + deltaX;
+        int proximoY = monstro[i].pos.y + deltaY;
+
+        if (PosicaoValida(mapa, proximoX, proximoY)) { //Testa a colisão
+            monstro[i].pos.x = proximoX;
+            monstro[i].pos.y = proximoY;
+        }
+
+
+
+    }
+
+
+}

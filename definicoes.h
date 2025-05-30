@@ -42,18 +42,20 @@ typedef struct {
 
 } Jogador;
 
-typedef struct {
-    Estado estado;
-    Jogador jogador;
-    Mapa mapa;
-    int nivelAtual;
-
-} Jogo;
 
 typedef struct {
     PosicaoGrade pos;
     Orientacao ori;
     int pontuacao;
-}Monstro;
+} Monstro;
+
+typedef struct {
+    Estado estado;
+    Jogador jogador;
+    Monstro monstro[10];
+    Mapa mapa;
+    int nivelAtual;
+
+} Jogo;
 
 #endif //DEFINICOES_H

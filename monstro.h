@@ -4,7 +4,8 @@
 
 #ifndef MONSTRO_H
 #define MONSTRO_H
+#include "definicoes.h"
 
-void moveMonstro(Jogador* jogador, Mapa* mapa, int direcaoX, int direcaoY);
+void moveMonstro(Monstro monstro[], int qtd_monstros, Mapa* mapa);
 
 #endif //MONSTRO_H

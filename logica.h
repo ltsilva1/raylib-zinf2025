@@ -9,7 +9,5 @@
 void processarLogica(Jogo *jogo);
 
 
-    
-}
 
 #endif //LOGICA_H
