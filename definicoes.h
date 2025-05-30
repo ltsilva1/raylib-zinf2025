@@ -40,7 +40,6 @@ typedef struct {
     PosicaoGrade pos;
     Orientacao dir;
 
-
 } Jogador;
 
 typedef struct {
@@ -50,5 +49,11 @@ typedef struct {
     int nivelAtual;
 
 } Jogo;
+
+typedef struct {
+    PosicaoGrade pos;
+    Orientacao ori;
+    int pontuacao;
+}Monstro;
 
 #endif //DEFINICOES_H

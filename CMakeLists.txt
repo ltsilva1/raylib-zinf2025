@@ -31,11 +31,7 @@ add_executable(${PROJECT_NAME} main.c
         desenha_prot.c
         desenha_prot.h
         processarEntrada.c
-        processarEntrada.h
-        logica.c
-        logica.h
-        startup.c
-        startup.h)
+        processarEntrada.h)
 #set(raylib_VERBOSE 1)
 target_link_libraries(${PROJECT_NAME} raylib)
 
