@@ -3,3 +3,5 @@
 //
 
 #include "monstro.h"
+
+void moveMonstro(Jogador* jogador, Mapa* mapa, int direcaoX, int direcaoY);

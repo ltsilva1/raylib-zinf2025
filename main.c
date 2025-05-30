@@ -24,7 +24,7 @@ int main() {
 
 			processarEntrada(&ZINF);
 
-			//processarLogica(&meuJogo);
+			processarLogica(&ZINF);
 
 			desenhaJogo(&ZINF);
 

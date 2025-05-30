@@ -5,6 +5,6 @@
 #ifndef MONSTRO_H
 #define MONSTRO_H
 
-void
+void moveMonstro(Jogador* jogador, Mapa* mapa, int direcaoX, int direcaoY);
 
 #endif //MONSTRO_H

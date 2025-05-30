@@ -5,6 +5,7 @@
 #include "logica.h"
 
 
-
+void processarLogica(Jogo *jogo) {
+    moveMonstro()
 
 }
