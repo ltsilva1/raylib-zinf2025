@@ -10,6 +10,7 @@ void inicializarJogador(Jogo *jogo);
 void Inicializar(Jogo *jogo) {
     jogo->estado = MENU;
     jogo->nivelAtual = 1;
+    jogo->seletorMenu = 0;
 
     carregaMapa(jogo);
     inicializarJogador(jogo);

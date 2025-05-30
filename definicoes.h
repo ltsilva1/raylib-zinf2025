@@ -12,8 +12,6 @@ typedef enum {
     JOGANDO,
     MENU,
     PAUSADO
-
-
 } Estado;
 
 typedef struct {
@@ -33,8 +31,8 @@ typedef enum {
     BAIXO,
     ESQUERDA,
     DIREITA,
-
 } Orientacao;
+
 
 typedef struct {
     PosicaoGrade pos;
@@ -51,6 +49,7 @@ typedef struct {
 
 typedef struct {
     Estado estado;
+    int seletorMenu;
     Jogador jogador;
     Monstro monstro[10];
     Mapa mapa;

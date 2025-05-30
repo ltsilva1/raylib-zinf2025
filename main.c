@@ -20,7 +20,6 @@ int main() {
 	//Utilizamos ele para atualizar o estado do programa / jogo
 		while (!WindowShouldClose()) {
 			BeginDrawing(); //Inicia o ambiente de desenho na tela
-			ClearBackground(RAYWHITE); //Limpa a tela e define cor de fundo
 
 			processarEntrada(&ZINF);
 
