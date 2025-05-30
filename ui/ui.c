@@ -2,8 +2,8 @@
 // Created by lucas on 30/05/2025.
 //
 
-#include "ui.h"
-#include "definicoes.h"
+#include "../ui/ui.h"
+#include "../nucleo/definicoes.h"
 #include "raylib.h"
 
 void DesenhaMenuPrincipal(Jogo* jogo) {

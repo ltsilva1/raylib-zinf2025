@@ -4,9 +4,9 @@
 #include <time.h>
 #include <stdlib.h>
 
-#include "monstro.h"
-#include "definicoes.h"
-#include "processarEntrada.h"
+#include "../game/monstro/monstro.h"
+#include "../../nucleo/definicoes.h"
+#include "../../input/processarEntrada.h"
 
 void moveMonstro(Monstro monstro[], int qtd_monstros, Mapa* mapa) {
     srand(time(NULL));

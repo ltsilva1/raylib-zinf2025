@@ -1,10 +1,5 @@
-//
-// Created by lucas on 26/05/2025.
-//
-
 #include "logica.h"
-
-#include "monstro.h"
+#include "../game/monstro/monstro.h"
 
 
 void processarLogica(Jogo *jogo) {

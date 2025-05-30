@@ -1,7 +1,7 @@
-#include "desenha_prot.h"
+#include "../graficos/render.h"
 #include "raylib.h"
-#include "definicoes.h"
-#include "ui.h"
+#include "../nucleo/definicoes.h"
+#include "../ui/ui.h"
 
 
 void desenhaJogo(Jogo* meuJogo) {

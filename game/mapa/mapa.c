@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "definicoes.h"
+#include "../../nucleo/definicoes.h"
 
 void carregaMapa (Jogo* meuJogo) {
     //char mapa[16][24+1];  // 24 caracteres + '\0'

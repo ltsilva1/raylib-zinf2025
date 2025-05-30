@@ -2,8 +2,8 @@
 // Created by lucas on 26/05/2025.
 //
 
-#include "startup.h"
-#include "mapa.h"
+#include "../nucleo/startup.h"
+#include "../game/mapa/mapa.h"
 
 void inicializarJogador(Jogo *jogo);
 

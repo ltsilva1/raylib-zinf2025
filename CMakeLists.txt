@@ -25,23 +25,33 @@ endif()
 # Our Project
 
 add_executable(${PROJECT_NAME} main.c
-        definicoes.h
-        mapa.c
-        mapa.h
-        desenha_prot.c
-        desenha_prot.h
-        processarEntrada.c
-        processarEntrada.h
-        startup.c
-        startup.h
-        monstro.h
-        monstro.c
-        logica.c
-        logica.h
-        ui.c
-        ui.h)
+        nucleo/definicoes.h
+        game/mapa/mapa.c
+        game/mapa/mapa.h
+        graficos/render.c
+        graficos/render.h
+        input/processarEntrada.c
+        input/processarEntrada.h
+        nucleo/startup.c
+        nucleo/startup.h
+        game/monstro/monstro.h
+        game/monstro/monstro.c
+        nucleo/logica.c
+        nucleo/logica.h
+        ui/ui.c
+        ui/ui.h)
 #set(raylib_VERBOSE 1)
 target_link_libraries(${PROJECT_NAME} raylib)
+
+# Adicionar diretórios de include
+target_include_directories(${PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/nucleo
+    ${CMAKE_CURRENT_SOURCE_DIR}/game
+    ${CMAKE_CURRENT_SOURCE_DIR}/graficos
+    ${CMAKE_CURRENT_SOURCE_DIR}/input
+    ${CMAKE_CURRENT_SOURCE_DIR}/ui
+)
 
 # Web Configurations
 if (${PLATFORM} STREQUAL "Web")

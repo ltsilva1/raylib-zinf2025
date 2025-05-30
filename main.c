@@ -2,11 +2,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include "raylib.h"
-#include "definicoes.h"
-#include "startup.h"
-#include "desenha_prot.h"
-#include "processarEntrada.h"
-#include "logica.h"
+#include "nucleo/definicoes.h"
+#include "nucleo/startup.h"
+#include "graficos/render.h"
+#include "input/processarEntrada.h"
+#include "nucleo/logica.h"
 
 int main() {
 	Jogo ZINF;

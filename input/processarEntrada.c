@@ -1,11 +1,7 @@
-//
-// Created by lucas on 26/05/2025.
-//
-
 #include "processarEntrada.h"
-
 #include "raylib.h"
 #include "external/miniaudio.h"
+#include "../nucleo/definicoes.h"
 
 void moveJogador(Jogador* jogador, Mapa* mapa, int direcaoX, int direcaoY);
 int PosicaoValida(Mapa* mapa, int x, int y);

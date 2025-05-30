@@ -4,7 +4,7 @@
 
 #ifndef MONSTRO_H
 #define MONSTRO_H
-#include "definicoes.h"
+#include "../../nucleo/definicoes.h"
 
 void moveMonstro(Monstro monstro[], int qtd_monstros, Mapa* mapa);
 

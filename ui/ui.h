@@ -4,7 +4,7 @@
 
 #ifndef UI_H
 #define UI_H
-#include "definicoes.h"
+#include "../nucleo/definicoes.h"
 
 void DesenhaMenuPrincipal(Jogo* jogo);
 
