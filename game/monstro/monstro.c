@@ -9,7 +9,6 @@
 #include "../../input/processarEntrada.h"
 
 void moveMonstro(Monstro monstro[], int qtd_monstros, Mapa* mapa) {
-    srand(time(NULL));
     for (int i = 0; i < qtd_monstros; i++) {
         int novaDirRand = rand() % 4; // 0:N, 1:S, 2:L, 3:O
         int deltaX = 0, deltaY = 0;

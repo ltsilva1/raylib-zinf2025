@@ -3,8 +3,6 @@
 #include "external/miniaudio.h"
 #include "../nucleo/definicoes.h"
 
-void moveJogador(Jogador* jogador, Mapa* mapa, int direcaoX, int direcaoY);
-int PosicaoValida(Mapa* mapa, int x, int y);
 
 void processarEntrada(Jogo *jogo) {
     switch (jogo->estado) {
@@ -17,10 +15,11 @@ void processarEntrada(Jogo *jogo) {
 
         case MENU:
             if (IsKeyPressed(KEY_DOWN))
-                jogo->seletorMenu += 1;
-
+                if (jogo->seletorMenu < 3)
+                    jogo->seletorMenu += 1;
             if (IsKeyPressed(KEY_UP))
-                jogo->seletorMenu -= 1;
+                if (jogo->seletorMenu > 0)
+                    jogo->seletorMenu -= 1;
 
             if (IsKeyPressed((KEY_ENTER))) {
                 switch (jogo->seletorMenu) {
@@ -39,16 +38,6 @@ void processarEntrada(Jogo *jogo) {
                 }
             }
     }
-}
-void moveJogador(Jogador* jogador, Mapa* mapa, int direcaoX, int direcaoY) {
-    int proximaPosicaoX = jogador->pos.x + direcaoX;
-    int proximaPosicaoY = jogador->pos.y + direcaoY;
-
-    if (PosicaoValida(mapa, proximaPosicaoX, proximaPosicaoY)) { //Testa a colisão
-        jogador->pos.x = proximaPosicaoX;
-        jogador->pos.y = proximaPosicaoY;
-    }
-
 }
 
 int PosicaoValida(Mapa* mapa, int x, int y) { //Se a posição for inválida returna 0, se for válida, retorna 1.

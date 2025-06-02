@@ -39,7 +39,9 @@ add_executable(${PROJECT_NAME} main.c
         nucleo/logica.c
         nucleo/logica.h
         ui/ui.c
-        ui/ui.h)
+        ui/ui.h
+        game/jogador/jogador.c
+        game/jogador/jogador.h)
 #set(raylib_VERBOSE 1)
 target_link_libraries(${PROJECT_NAME} raylib)
 

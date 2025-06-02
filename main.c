@@ -9,23 +9,23 @@
 #include "nucleo/logica.h"
 
 int main() {
-	Jogo ZINF;
+	Jogo zinf;
 
 	InitWindow(LARGURA, ALTURA, "Morde & Assopra"); //Inicializa janela, com certo tamanho e titulo
 	SetTargetFPS(60);// Ajusta a janela para 60 frames por segundo
 
-	Inicializar(&ZINF);
+	Inicializar(&zinf);
 
 	//Este laco repete enquanto a janela nao for fechada
 	//Utilizamos ele para atualizar o estado do programa / jogo
 		while (!WindowShouldClose()) {
 			BeginDrawing(); //Inicia o ambiente de desenho na tela
 
-			processarEntrada(&ZINF);
+			processarEntrada(&zinf);
 
-			processarLogica(&ZINF);
+			processarLogica(&zinf);
 
-			desenhaJogo(&ZINF);
+			desenhaJogo(&zinf);
 
 			EndDrawing(); //Finaliza o ambiente de desenho na tela
 		}

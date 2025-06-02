@@ -23,7 +23,10 @@ typedef struct {
 typedef struct {
     char mapa[16][25];
     PosicaoGrade posInicialJogador;
-
+    PosicaoGrade posInicialEspada;
+    int espadaPegada;
+    PosicaoGrade vidasExtras[5];
+    int vidasPegadas[5];
 } Mapa;
 
 typedef enum {
@@ -37,7 +40,9 @@ typedef enum {
 typedef struct {
     PosicaoGrade pos;
     Orientacao dir;
-
+    int vidas;
+    int pontuacaoTotal;
+    int temEspada;
 } Jogador;
 
 
@@ -45,6 +50,7 @@ typedef struct {
     PosicaoGrade pos;
     Orientacao ori;
     int pontuacao;
+
 } Monstro;
 
 typedef struct {
@@ -52,6 +58,7 @@ typedef struct {
     int seletorMenu;
     Jogador jogador;
     Monstro monstro[10];
+    int numMonstrosAtual;
     Mapa mapa;
     int nivelAtual;
 
