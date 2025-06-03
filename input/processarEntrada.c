@@ -7,10 +7,10 @@
 void processarEntrada(Jogo *jogo) {
     switch (jogo->estado) {
         case JOGANDO:
-            if (IsKeyPressed(KEY_LEFT)) {moveJogador(&jogo->jogador, &jogo->mapa, -1, 0);}
-            if (IsKeyPressed(KEY_RIGHT)) {moveJogador(&jogo->jogador, &jogo->mapa, 1, 0);}
-            if (IsKeyPressed(KEY_UP)) {moveJogador(&jogo->jogador, &jogo->mapa, 0, -1);}
-            if (IsKeyPressed(KEY_DOWN)) {moveJogador(&jogo->jogador, &jogo->mapa, 0, 1);}
+            if (IsKeyPressed(KEY_LEFT)) {moveJogador(&jogo->jogador, &jogo->mapa, -1, 0); jogo->jogador.dir = ESQUERDA;}
+            if (IsKeyPressed(KEY_RIGHT)) {moveJogador(&jogo->jogador, &jogo->mapa, 1, 0); jogo->jogador.dir = DIREITA;}
+            if (IsKeyPressed(KEY_UP)) {moveJogador(&jogo->jogador, &jogo->mapa, 0, -1); jogo->jogador.dir = CIMA;}
+            if (IsKeyPressed(KEY_DOWN)) {moveJogador(&jogo->jogador, &jogo->mapa, 0, 1); jogo->jogador.dir = BAIXO;}
             break;
 
         case MENU:

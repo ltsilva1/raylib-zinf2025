@@ -4,6 +4,7 @@
 #define LARGURA 1200
 #define ALTURA 800
 #define CASA 50
+#include "raylib.h"
 
 #ifndef DEFINICOES_H
 #define DEFINICOES_H
@@ -17,8 +18,14 @@ typedef enum {
 typedef struct {
     int x;
     int y;
-
 } PosicaoGrade;
+
+typedef struct {
+    Texture2D norte;
+    Texture2D sul;
+    Texture2D leste;
+    Texture2D oeste;
+} Texturas;
 
 typedef struct {
     char mapa[16][25];
@@ -27,6 +34,9 @@ typedef struct {
     int espadaPegada;
     PosicaoGrade vidasExtras[5];
     int vidasPegadas[5];
+    Texturas tex;
+    Texture2D chao;
+
 } Mapa;
 
 typedef enum {
@@ -40,6 +50,7 @@ typedef enum {
 typedef struct {
     PosicaoGrade pos;
     Orientacao dir;
+    Texturas tex;
     int vidas;
     int pontuacaoTotal;
     int temEspada;
@@ -48,7 +59,8 @@ typedef struct {
 
 typedef struct {
     PosicaoGrade pos;
-    Orientacao ori;
+    Orientacao dir;
+    Texturas tex;
     int pontuacao;
 
 } Monstro;

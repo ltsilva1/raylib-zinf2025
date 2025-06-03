@@ -7,5 +7,8 @@
 #include "definicoes.h"
 
 void Inicializar(Jogo *jogo);
+void inicializarJogador(Jogo *jogo);
+void inicializarMonstrons(Jogo* jogo);
+void carregarTexturas(Jogo* jogo);
 
 #endif //STARTUP_H

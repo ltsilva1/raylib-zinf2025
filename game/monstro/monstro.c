@@ -14,10 +14,10 @@ void moveMonstro(Monstro monstro[], int qtd_monstros, Mapa* mapa) {
         int deltaX = 0, deltaY = 0;
 
         switch (novaDirRand) {
-            case 0: deltaY = -1; break;
-            case 1: deltaY = 1; break;
-            case 2: deltaX = 1; break;
-            case 3: deltaX = -1; break;
+            case 0: deltaY = -1; monstro[i].dir = CIMA; break;
+            case 1: deltaY = 1; monstro[i].dir = BAIXO; break;
+            case 2: deltaX = 1; monstro[i].dir = DIREITA; break;
+            case 3: deltaX = -1; monstro[i].dir = ESQUERDA; break;
         }
 
         int proximoX = monstro[i].pos.x + deltaX;
