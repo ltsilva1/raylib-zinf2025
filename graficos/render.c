@@ -64,7 +64,7 @@ void desenhaMonstro(Jogo* jogo) {
 void desenhaJogador(Jogo* jogo) {
     Texture2D texturaAtual;
 
-    Vector2 posicaoJogador = { // Vetor necessário pra utilizar a função de desenhar textura
+    Vector2 posicaoJogador = { // Vetor necessário pra utilizar a função de desenhar textura {TALVEZ MUDAR APARA POSICAOGRADE}
         jogo->jogador.pos.x * CASA + 1,
         jogo->jogador.pos.y * CASA + 1
     };

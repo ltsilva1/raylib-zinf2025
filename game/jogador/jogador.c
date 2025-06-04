@@ -7,6 +7,7 @@
 #include "processarEntrada.h"
 #include "../nucleo/definicoes.h"
 #include "raylib.h"
+#include <stdio.h>
 
 void moveJogador(Jogador* jogador, Mapa* mapa, int direcaoX, int direcaoY) {
     int proximaPosicaoX = jogador->pos.x + direcaoX;
@@ -35,3 +36,12 @@ void pegaVida(Jogador* jogador, Mapa* mapa) {
     }
 }
 
+void danoJogador(Jogador* jogador, Monstro monstro[]) {
+    int numMonstro = 10; // TEMPORÁRIO
+
+    for (int i = 0; i < numMonstro; ++i) {
+        if (monstro[i].vivo == 1 && (jogador->pos.x == monstro[i].pos.x && jogador->pos.y == monstro[i].pos.y)) {
+            --jogador->vidas;
+        }
+    }
+}

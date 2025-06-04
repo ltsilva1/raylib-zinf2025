@@ -43,10 +43,11 @@ void carregarTexturas(Jogo* jogo) {
 
 void inicializarMonstrons(Jogo* jogo) {
     for (int i = 0; i < 10; ++i) {
+        jogo->monstro[i].vivo = 1;
         jogo->monstro[i].tex.norte = LoadTexture(".recursos/inimigos/inimigo_cima.png");
         jogo->monstro[i].tex.sul = LoadTexture(".recursos/inimigos/inimigo_baixo.png");
-        jogo->monstro[i].tex.leste = LoadTexture(".recursos/inimigos/inimigo_direita.png");
-        jogo->monstro[i].tex.oeste = LoadTexture(".recursos/inimigos/inimigo_esquerda.png");
+        jogo->monstro[i].tex.oeste = LoadTexture(".recursos/inimigos/inimigo_direita.png");
+        jogo->monstro[i].tex.leste = LoadTexture(".recursos/inimigos/inimigo_esquerda.png");
     }
 
 

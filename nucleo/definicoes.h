@@ -53,7 +53,9 @@ typedef struct {
     Texturas tex;
     int vidas;
     int pontuacaoTotal;
-    int temEspada;
+    int temEspada; // bool
+    int contatoMonstro; // bool
+
 } Jogador;
 
 
@@ -62,6 +64,7 @@ typedef struct {
     Orientacao dir;
     Texturas tex;
     int pontuacao;
+    int vivo; // bool
 
 } Monstro;
 

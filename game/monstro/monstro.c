@@ -8,29 +8,28 @@
 #include "../../nucleo/definicoes.h"
 #include "../../input/processarEntrada.h"
 
-void moveMonstro(Monstro monstro[], int qtd_monstros, Mapa* mapa) {
+void moveMonstro(Jogador* jogador, Monstro monstro[], int qtd_monstros, Mapa* mapa) {
     for (int i = 0; i < qtd_monstros; i++) {
-        int novaDirRand = rand() % 4; // 0:N, 1:S, 2:L, 3:O
-        int deltaX = 0, deltaY = 0;
+        //int novaDirRand = rand() % 4; // 0:N, 1:S, 2:L, 3:O
+        int movimentaOuNao = rand() % 50;
 
-        switch (novaDirRand) {
-            case 0: deltaY = -1; monstro[i].dir = CIMA; break;
-            case 1: deltaY = 1; monstro[i].dir = BAIXO; break;
-            case 2: deltaX = 1; monstro[i].dir = DIREITA; break;
-            case 3: deltaX = -1; monstro[i].dir = ESQUERDA; break;
+        int diffX = jogador->pos.x - monstro[i].pos.x;
+        int diffY = jogador->pos.y - monstro[i].pos.y;
+
+        int passoX = 0;
+        if (diffX > 0) passoX = 1;
+        else if (diffX < 0) passoX = -1;
+
+        int passoY = 0;
+        if (diffY > 0) passoY = 1;
+        else if (diffY < 0) passoY = -1;
+
+        int ProximoX = monstro[i].pos.x + passoX;
+        int ProximoY = monstro[i].pos.y + passoY;
+
+        if (PosicaoValida(mapa, ProximoX, ProximoY)) { //Testa a colisão
+            monstro[i].pos.x = ProximoX;
+            monstro[i].pos.y = ProximoY;
         }
-
-        int proximoX = monstro[i].pos.x + deltaX;
-        int proximoY = monstro[i].pos.y + deltaY;
-
-        if (PosicaoValida(mapa, proximoX, proximoY)) { //Testa a colisão
-            monstro[i].pos.x = proximoX;
-            monstro[i].pos.y = proximoY;
-        }
-
-
-
     }
-
-
 }
