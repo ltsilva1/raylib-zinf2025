@@ -18,6 +18,7 @@ void desenhaJogo(Jogo* meuJogo) {
             desenhaVida(meuJogo);
             printf("%d", meuJogo->jogador.vidas);
             //printf("%d", meuJogo->jogador.temEspada);
+
             break;
         case MENU:
             DesenhaMenuPrincipal(meuJogo);
@@ -88,18 +89,16 @@ void desenhaJogador(Jogo* jogo) {
 
 void desenhaEspada(Jogo* jogo) {
     if (jogo->mapa.espadaPegada == 0)
-        DrawRectangle(jogo->mapa.posInicialEspada.x * CASA, // Aqui você usaria DrawTextureRec para o sprite do monstro
-                  jogo->mapa.posInicialEspada.y * CASA,
-                  CASA, CASA, YELLOW); // Cor temporária
+        DrawTexture(jogo->espadaTex, jogo->mapa.posInicialEspada.x * CASA,
+                  jogo->mapa.posInicialEspada.y * CASA, WHITE);
 
 }
 
 void desenhaVida(Jogo* jogo) {
     for (int i = 0; i < 5; ++i)
         if (jogo->mapa.vidasPegadas[i] == 0)
-            DrawRectangle(jogo->mapa.vidasExtras[i].x * CASA, // Aqui você usaria DrawTextureRec para o sprite do monstro
-                      jogo->mapa.vidasExtras[i].y * CASA,
-                      CASA, CASA, PINK); // Cor temporária
+            DrawTexture(jogo->vidaTex, jogo->mapa.vidasExtras[i].x * CASA,
+                jogo->mapa.vidasExtras[i].y * CASA, WHITE);
 
 }
 

@@ -76,6 +76,8 @@ typedef struct {
     int numMonstrosAtual;
     Mapa mapa;
     int nivelAtual;
+    Texture2D vidaTex;
+    Texture2D espadaTex;
 
 } Jogo;
 
