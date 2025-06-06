@@ -41,7 +41,9 @@ add_executable(${PROJECT_NAME} main.c
         ui/ui.c
         ui/ui.h
         game/jogador/jogador.c
-        game/jogador/jogador.h)
+        game/jogador/jogador.h
+        game/jogador/espada.c
+        game/jogador/espada.h)
 #set(raylib_VERBOSE 1)
 target_link_libraries(${PROJECT_NAME} raylib)
 

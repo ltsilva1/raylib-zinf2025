@@ -39,9 +39,14 @@ void pegaVida(Jogador* jogador, Mapa* mapa) {
 void danoJogador(Jogador* jogador, Monstro monstro[]) {
     int numMonstro = 10; // TEMPORÁRIO
 
+    if (jogador->instantesInvencibilidade > 0)
+        return;
+
     for (int i = 0; i < numMonstro; ++i) {
-        if (monstro[i].vivo == 1 && (jogador->pos.x == monstro[i].pos.x && jogador->pos.y == monstro[i].pos.y)) {
-            --jogador->vidas;
-        }
+            if (monstro[i].vivo == 1 && (jogador->pos.x == monstro[i].pos.x && jogador->pos.y == monstro[i].pos.y)) {
+                --jogador->vidas;
+                jogador->instantesInvencibilidade = 1.5f;
+                break;
+            }
     }
 }

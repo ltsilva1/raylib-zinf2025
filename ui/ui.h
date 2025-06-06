@@ -7,5 +7,6 @@
 #include "../nucleo/definicoes.h"
 
 void DesenhaMenuPrincipal(Jogo* jogo);
+void DesenhaGameOver (Jogo* jogo);
 
 #endif //UI_H

@@ -50,3 +50,37 @@ void DesenhaMenuPrincipal(Jogo* jogo) {
                  800 - 60, 20, LIGHTGRAY);
     }
 
+void DesenhaGameOver (Jogo* jogo) {
+    ClearBackground(BLACK);
+    // Opções do Menu
+    // Você pode definir um array de strings para as opções para facilitar
+    const char* opcoesTexto[3] = {
+        "Carregar Jogo",
+        "Reiniciar Jogo",
+        "Voltar ao Menu"
+    };
+
+    int tamanhoFonteOpcao = 30;
+    int espacamentoOpcao = 45; // Espaço vertical entre as opções
+
+    for (int i = 0; i < 3; i++) {
+        Color cor = WHITE;
+        if (i == jogo->seletorMenu) {
+            cor = GOLD; // Cor de destaque para a opção selecionada
+        }
+
+        // Desenha uma seta simples ou marcador para a opção selecionada (opcional)
+        if (i == jogo->seletorMenu) {
+            DrawText(">", 60,
+                     800 / 2 + i * espacamentoOpcao - (tamanhoFonteOpcao/2), tamanhoFonteOpcao, GOLD);
+        }
+
+        DrawText(opcoesTexto[i],
+                 100,
+                 800 / 2 + i * espacamentoOpcao - (tamanhoFonteOpcao/2), // Ajusta para centralizar verticalmente
+                 tamanhoFonteOpcao,
+                 cor);
+    }
+
+}
+

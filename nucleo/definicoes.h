@@ -2,8 +2,9 @@
 // Created by lucas on 26/05/2025.
 //
 #define LARGURA 1200
-#define ALTURA 800
+#define ALTURA 860
 #define CASA 50
+#define ALTURA_HUD 60
 #include "raylib.h"
 
 #ifndef DEFINICOES_H
@@ -12,7 +13,8 @@
 typedef enum {
     JOGANDO,
     MENU,
-    PAUSADO
+    PAUSADO,
+    FIM_DE_JOGO
 } Estado;
 
 typedef struct {
@@ -55,6 +57,9 @@ typedef struct {
     int pontuacaoTotal;
     int temEspada; // bool
     int contatoMonstro; // bool
+    float instantesInvencibilidade;
+    float instantesEspada;
+    PosicaoGrade tilesAtaque[3];
 
 } Jogador;
 
@@ -65,7 +70,7 @@ typedef struct {
     Texturas tex;
     int pontuacao;
     int vivo; // bool
-    int passosRestantes
+    int passosRestantes;
 
 } Monstro;
 
