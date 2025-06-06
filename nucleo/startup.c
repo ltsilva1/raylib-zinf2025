@@ -39,6 +39,9 @@ void carregarTexturas(Jogo* jogo) {
     jogo->mapa.tex.sul = LoadTexture(".recursos/paredes/parede.png");
     jogo->mapa.chao = LoadTexture(".recursos/chao/chao_placeholder.png");
 
+    jogo->vidaTex = LoadTexture(".recursos/items/vida.png");
+    jogo->espadaTex = LoadTexture(".recursos/items/espada.png");
+
 }
 
 void inicializarMonstrons(Jogo* jogo) {
