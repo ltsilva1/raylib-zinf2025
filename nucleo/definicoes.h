@@ -65,6 +65,7 @@ typedef struct {
     Texturas tex;
     int pontuacao;
     int vivo; // bool
+    int passosRestantes
 
 } Monstro;
 
