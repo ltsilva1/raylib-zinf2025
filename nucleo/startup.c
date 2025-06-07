@@ -12,18 +12,18 @@ void Inicializar(Jogo *jogo) {
     jogo->estado = MENU;
     jogo->nivelAtual = 1;
     jogo->seletorMenu = 0;
-
+    jogo->modoDebug = false;
     carregarTexturas(jogo);
     carregaMapa(jogo);
-    inicializarJogador(jogo);
     inicializarMonstrons(jogo);
+    inicializarJogador(jogo);
 
 }
 void inicializarJogador(Jogo *jogo) {
     jogo->jogador.pontuacaoTotal = 0;
     jogo->jogador.dir = BAIXO;
-    jogo->jogador.pos.x = 1;
-    jogo->jogador.pos.y = 1; // BOTAR O PosIncialJogador aqui dps
+    jogo->jogador.pos.x = jogo->mapa.posInicialJogador.x;
+    jogo->jogador.pos.y = jogo->mapa.posInicialJogador.y;
     jogo->jogador.vidas = 3;
     jogo->jogador.pontuacaoTotal = 0;
     jogo->jogador.temEspada = 0;
@@ -48,14 +48,19 @@ void carregarTexturas(Jogo* jogo) {
 
 void inicializarMonstrons(Jogo* jogo) {
     for (int i = 0; i < 10; ++i) {
-        jogo->monstro[i].pontuacao = rand() % 100 + 1;
-        jogo->monstro[i].vivo = 1;
-        jogo->monstro[i].tex.norte = LoadTexture(".recursos/inimigos/inimigo_cima.png");
-        jogo->monstro[i].tex.sul = LoadTexture(".recursos/inimigos/inimigo_baixo.png");
-        jogo->monstro[i].tex.oeste = LoadTexture(".recursos/inimigos/inimigo_direita.png");
-        jogo->monstro[i].tex.leste = LoadTexture(".recursos/inimigos/inimigo_esquerda.png");
+        jogo->mapa.monstro[i].pontuacao = rand() % 100 + 1;
+        jogo->mapa.monstro[i].vivo = 1;
+        jogo->mapa.monstro[i].tex.norte = LoadTexture(".recursos/inimigos/inimigo_cima.png");
+        jogo->mapa.monstro[i].tex.sul = LoadTexture(".recursos/inimigos/inimigo_baixo.png");
+        jogo->mapa.monstro[i].tex.oeste = LoadTexture(".recursos/inimigos/inimigo_direita.png");
+        jogo->mapa.monstro[i].tex.leste = LoadTexture(".recursos/inimigos/inimigo_esquerda.png");
     }
 
+    for (int i = jogo->mapa.numMonstros; i < 10; ++i)
+        jogo->mapa.monstro[i].vivo = 0;
+}
+
+void inicializarMapa(Jogo* jogo) {
 
 
 }

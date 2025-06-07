@@ -4,14 +4,18 @@
 #include "../game/monstro/monstro.h"
 #include "../game/jogador/jogador.h"
 #include "../game/jogador/espada.h"
+#include "../game/mapa/avancanivel.h"
 
 
 
 void processarLogica(Jogo *jogo) {
-            moveMonstro(&jogo->jogador, jogo->monstro, 10, &jogo->mapa);
+            moveMonstro(&jogo->jogador, jogo->mapa.monstro, jogo->mapa.numMonstros, &jogo->mapa);
+
             pegaEspada(&jogo->jogador, &jogo->mapa);
+
             pegaVida(&jogo->jogador, &jogo->mapa);
-            danoJogador(&jogo->jogador, jogo->monstro);
+
+            danoJogador(&jogo->jogador, jogo->mapa.monstro);
             if (jogo->jogador.vidas <= 0) {
                 jogo->estado = FIM_DE_JOGO;
                 inicializarJogador(jogo);
@@ -19,6 +23,11 @@ void processarLogica(Jogo *jogo) {
             if (jogo->jogador.instantesInvencibilidade > 0) {
                 jogo->jogador.instantesInvencibilidade -= GetFrameTime();
             }
+
             ataqueEspada(jogo);
+
+            if (jogo->mapa.numMonstros == 0) {
+                avancaNivel(jogo);
+            }
 
 }

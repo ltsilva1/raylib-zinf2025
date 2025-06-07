@@ -3,12 +3,14 @@
 
 #include "../../nucleo/definicoes.h"
 
-void carregaMapa (Jogo* meuJogo) {
+int carregaMapa (Jogo* meuJogo) {
     FILE* f;
+    char nomeArquivo[20];
+    sprintf(nomeArquivo, "mapa%02d.txt", meuJogo->nivelAtual);
 
-    f = fopen("mapa01.txt", "r");
+    f = fopen(nomeArquivo, "r");
     if (f == NULL) {
-        exit(1);
+        return 0;
     }
 
     for (int i = 0; i < 16; i++) {
@@ -29,15 +31,15 @@ void carregaMapa (Jogo* meuJogo) {
 
 
     // Repassa a localização dos monstros no mapa para a estrutura do jogo
-    int contaMonstro = 0;
+    meuJogo->mapa.numMonstros = 0;
 
     for (int i = 0; i < 16; i++) {
         for (int j = 0; j < 24; j++) {
             if (meuJogo->mapa.mapa[i][j] == 'M') {
-                if (contaMonstro<10) {
-                    meuJogo->monstro[contaMonstro].pos.x = j;
-                    meuJogo->monstro[contaMonstro].pos.y = i;
-                    contaMonstro++;
+                if (meuJogo->mapa.numMonstros<10) {
+                    meuJogo->mapa.monstro[meuJogo->mapa.numMonstros].pos.x = j;
+                    meuJogo->mapa.monstro[meuJogo->mapa.numMonstros].pos.y = i;
+                    meuJogo->mapa.numMonstros++;
                     meuJogo->mapa.mapa[i][j] = ' ';
                 }
             }
@@ -48,8 +50,8 @@ void carregaMapa (Jogo* meuJogo) {
     for (int i = 0; i < 16; i++) {
         for (int j = 0; j < 24; j++) {
             if (meuJogo->mapa.mapa[i][j] == 'J') {
-                meuJogo->jogador.pos.x = j;
-                meuJogo->jogador.pos.y = i;
+                meuJogo->mapa.posInicialJogador.x = j;
+                meuJogo->mapa.posInicialJogador.y = i;
             }
         }
     }
@@ -83,5 +85,5 @@ void carregaMapa (Jogo* meuJogo) {
             }
         }
     }
-
+    return 1;
 }

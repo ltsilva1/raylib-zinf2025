@@ -21,7 +21,7 @@ void moveJogador(Jogador* jogador, Mapa* mapa, int direcaoX, int direcaoY) {
 
 void pegaEspada(Jogador* jogador, Mapa* mapa) {
     if (jogador->pos.x == mapa->posInicialEspada.x && jogador->pos.y == mapa->posInicialEspada.y) {
-        jogador->temEspada = 1;
+        jogador->temEspada = true;
         mapa->espadaPegada = 1;
 
     }

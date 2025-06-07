@@ -18,11 +18,6 @@ void desenhaJogo(Jogo* meuJogo) {
             desenhaJogador(meuJogo);
             desenhaVida(meuJogo);
             desenhaMonstro(meuJogo);
-            printf("%d", meuJogo->jogador.vidas);
-            //printf("%d", meuJogo->jogador.temEspada);
-            for (int k = 0; k < 3; ++k)
-                DrawRectangle(meuJogo->jogador.tilesAtaque[k].x * CASA, meuJogo->jogador.tilesAtaque[k].y * CASA + ALTURA_HUD, CASA, CASA, YELLOW);
-
             break;
         case MENU:
             DesenhaMenuPrincipal(meuJogo);
@@ -44,26 +39,26 @@ void desenhaCenario(Jogo* jogo) {
 
 void desenhaMonstro(Jogo* jogo) {
     for (int i = 0; i < 10; ++i) {
-        if (jogo->monstro[i].vivo == 1) {
+        if (jogo->mapa.monstro[i].vivo == 1) {
             Texture2D texturaAtual;
 
             Vector2 posicaoMonstro = { // Vetor necessário pra utilizar a função de desenhar textura
-                jogo->monstro[i].pos.x * CASA + 1,
-                jogo->monstro[i].pos.y * CASA + 1 + ALTURA_HUD
+                jogo->mapa.monstro[i].pos.x * CASA + 1,
+                jogo->mapa.monstro[i].pos.y * CASA + 1 + ALTURA_HUD
             };
 
-            switch (jogo->monstro[i].dir) { // As texturas tão sendo carregadas toda hora, precisa mudar isso aqui
+            switch (jogo->mapa.monstro[i].dir) { // As texturas tão sendo carregadas toda hora, precisa mudar isso aqui
                 case CIMA:
-                    texturaAtual = jogo->monstro[i].tex.norte; // endereço textura pra cima;
+                    texturaAtual = jogo->mapa.monstro[i].tex.norte; // endereço textura pra cima;
                     break;
                 case BAIXO:
-                    texturaAtual = jogo->monstro[i].tex.sul;
+                    texturaAtual = jogo->mapa.monstro[i].tex.sul;
                     break;;
                 case ESQUERDA:
-                    texturaAtual = jogo->monstro[i].tex.leste;
+                    texturaAtual = jogo->mapa.monstro[i].tex.leste;
                     break;
                 case DIREITA:
-                    texturaAtual = jogo->monstro[i].tex.oeste;
+                    texturaAtual = jogo->mapa.monstro[i].tex.oeste;
                     break;
             }
             DrawTextureV(texturaAtual, posicaoMonstro, WHITE);
@@ -106,6 +101,8 @@ void desenhaEspada(Jogo* jogo) {
     if (jogo->mapa.espadaPegada == 0)
         DrawTexture(jogo->espadaTex, jogo->mapa.posInicialEspada.x * CASA,
                   jogo->mapa.posInicialEspada.y * CASA + ALTURA_HUD, WHITE);
+    for (int k = 0; k < 3; ++k)
+        DrawRectangle(jogo->jogador.tilesAtaque[k].x * CASA, jogo->jogador.tilesAtaque[k].y * CASA + ALTURA_HUD, CASA, CASA, YELLOW);
 }
 
 void desenhaVida(Jogo* jogo) {
@@ -117,23 +114,43 @@ void desenhaVida(Jogo* jogo) {
 }
 
 void desenhaHUD(Jogo* jogo) {
-    DrawRectangle(0, 0, LARGURA, ALTURA_HUD, BLACK);
+    switch (jogo->modoDebug) {
+        case false:
+            DrawRectangle(0, 0, LARGURA, ALTURA_HUD, BLACK);
 
-    char Vidas[20];
-    sprintf(Vidas, "Vidas: %d", jogo->jogador.vidas);
+            char vidas[20];
+            sprintf(vidas, "Vidas: %d", jogo->jogador.vidas);
 
-    char Pontos[20];
-    sprintf(Pontos, "Pontos: %d", jogo->jogador.pontuacaoTotal);
+            char pontos[20];
+            sprintf(pontos, "Pontos: %d", jogo->jogador.pontuacaoTotal);
 
+            char nivelAtual[20];
+            sprintf(nivelAtual, "Nivel: %d", jogo->nivelAtual);
 
-    char TemEspada[20];
-    sprintf(TemEspada, "Espada?: %d", jogo->jogador.temEspada);
+            DrawText(vidas, 20, 15, 35, WHITE);
+            DrawText(pontos, 400, 15, 35, WHITE);
+            DrawText(nivelAtual, 800, 15, 35, WHITE);
+            break;
 
-    DrawText(Vidas, 20, 15, 35, WHITE);
-    DrawText(Pontos, 400, 15, 35, WHITE);
-    DrawText(TemEspada, 800, 15, 35, WHITE);
+        case true:
+            DrawRectangle(0, 0, LARGURA, ALTURA_HUD, DARKBLUE);
 
+            char posJogador[50];
+            sprintf(posJogador, "X: %d, Y: %d", jogo->jogador.pos.x, jogo->jogador.pos.y);
 
+            char temEspada[20];
+            if (jogo->jogador.temEspada == true)
+                sprintf(temEspada, "Espada?: Sim");
+            else sprintf(temEspada, "Espada?: Nao");
+
+            char numMonstro[20];
+            sprintf(numMonstro, "Monstros vivos: %d", jogo->mapa.numMonstros);
+
+            DrawText(posJogador, 20, 15, 35, YELLOW);
+            DrawText(temEspada, 400, 15, 35, YELLOW);
+            DrawText(numMonstro, 800, 15, 35, YELLOW);
+            break;
+    }
 }
 
 

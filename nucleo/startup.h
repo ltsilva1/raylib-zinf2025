@@ -10,5 +10,6 @@ void Inicializar(Jogo *jogo);
 void inicializarJogador(Jogo *jogo);
 void inicializarMonstrons(Jogo* jogo);
 void carregarTexturas(Jogo* jogo);
+void inicializarMapa(Jogo* jogo);
 
 #endif //STARTUP_H

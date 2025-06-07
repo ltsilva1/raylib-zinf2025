@@ -6,6 +6,7 @@
 #define CASA 50
 #define ALTURA_HUD 60
 #include "raylib.h"
+#include <stdbool.h>
 
 #ifndef DEFINICOES_H
 #define DEFINICOES_H
@@ -29,18 +30,6 @@ typedef struct {
     Texture2D oeste;
 } Texturas;
 
-typedef struct {
-    char mapa[16][25];
-    PosicaoGrade posInicialJogador;
-    PosicaoGrade posInicialEspada;
-    int espadaPegada;
-    PosicaoGrade vidasExtras[5];
-    int vidasPegadas[5];
-    Texturas tex;
-    Texture2D chao;
-
-} Mapa;
-
 typedef enum {
     CIMA,
     BAIXO,
@@ -60,9 +49,7 @@ typedef struct {
     float instantesInvencibilidade;
     float instantesEspada;
     PosicaoGrade tilesAtaque[3];
-
 } Jogador;
-
 
 typedef struct {
     PosicaoGrade pos;
@@ -71,20 +58,30 @@ typedef struct {
     int pontuacao;
     int vivo; // bool
     int passosRestantes;
-
 } Monstro;
+
+typedef struct {
+    char mapa[16][25];
+    PosicaoGrade posInicialJogador;
+    PosicaoGrade posInicialEspada;
+    Monstro monstro[10];
+    int numMonstros;
+    bool espadaPegada;
+    PosicaoGrade vidasExtras[5];
+    int vidasPegadas[5];
+    Texturas tex;
+    Texture2D chao;
+} Mapa;
 
 typedef struct {
     Estado estado;
     int seletorMenu;
     Jogador jogador;
-    Monstro monstro[10];
-    int numMonstrosAtual;
     Mapa mapa;
     int nivelAtual;
     Texture2D vidaTex;
     Texture2D espadaTex;
-
+    bool modoDebug;
 } Jogo;
 
 #endif //DEFINICOES_H

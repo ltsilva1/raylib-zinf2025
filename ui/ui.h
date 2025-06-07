@@ -8,5 +8,6 @@
 
 void DesenhaMenuPrincipal(Jogo* jogo);
 void DesenhaGameOver (Jogo* jogo);
+void TesteMapaDebug(Jogo* jogo);
 
 #endif //UI_H

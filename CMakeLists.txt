@@ -28,6 +28,8 @@ add_executable(${PROJECT_NAME} main.c
         nucleo/definicoes.h
         game/mapa/mapa.c
         game/mapa/mapa.h
+        game/mapa/avancanivel.c
+        game/mapa/avancanivel.h
         graficos/render.c
         graficos/render.h
         input/processarEntrada.c

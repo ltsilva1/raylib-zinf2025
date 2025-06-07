@@ -48,6 +48,12 @@ void DesenhaMenuPrincipal(Jogo* jogo) {
         DrawText("Use as SETAS e ENTER para selecionar",
                  1200 / 2 - MeasureText("Use as SETAS e ENTER para selecionar", 20) / 2,
                  800 - 60, 20, LIGHTGRAY);
+
+        if (jogo->modoDebug == true)
+            TesteMapaDebug(jogo);
+
+
+
     }
 
 void DesenhaGameOver (Jogo* jogo) {
@@ -82,5 +88,43 @@ void DesenhaGameOver (Jogo* jogo) {
                  cor);
     }
 
+}
+
+#include <stdio.h> // Para snprintf
+
+// Função de debug para desenhar a matriz do mapa como texto na tela
+void TesteMapaDebug(Jogo* jogo) {
+    int posXInicial = 50;  // Posição X inicial na tela para começar a desenhar
+    int posYInicial = 70;  // Posição Y inicial (abaixo da HUD)
+    int tamanhoFonte = 12; // Tamanho da fonte para os caracteres
+    int espacamentoX = 10; // Espaçamento horizontal entre os caracteres
+    int espacamentoY = 15; // Espaçamento vertical entre as linhas
+
+    // Título para o debug visual
+    DrawText("DEBUG: Matriz do Mapa Carregada", posXInicial, posYInicial - 20, 20, RED);
+
+    // 1. Loop para percorrer cada linha do mapa
+    for (int i = 0; i < 16; i++) {
+        // 2. Loop para percorrer cada coluna da linha atual
+        for (int j = 0; j < 24; j++) {
+            char c = jogo->mapa.mapa[i][j];
+            // Se o caractere for nulo, não desenha nada (fim da linha lida pelo fgets)
+            if (c == '\0') {
+                break;
+            }
+            // 3. Prepara o caractere para ser desenhado pelo DrawText
+            // DrawText precisa de uma string, então criamos uma string temporária de 2 caracteres:
+            // [caractere][caractere nulo '\0']
+            char bufferDeCaractere[2];
+            snprintf(bufferDeCaractere, sizeof(bufferDeCaractere), "%c", c);
+
+            // 4. Calcula a posição do caractere na tela
+            int posX = posXInicial + (j * espacamentoX);
+            int posY = posYInicial + (i * espacamentoY);
+
+            // 5. Desenha o caractere na tela
+            DrawText(bufferDeCaractere, posX, posY, tamanhoFonte, WHITE);
+        }
+    }
 }
 
