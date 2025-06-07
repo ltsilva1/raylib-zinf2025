@@ -25,6 +25,8 @@ void desenhaJogo(Jogo* meuJogo) {
         case FIM_DE_JOGO:
             DesenhaGameOver(meuJogo);
             break;
+        case PAUSADO:
+            DesenhaPause(meuJogo);
 
     }
 }
@@ -111,46 +113,6 @@ void desenhaVida(Jogo* jogo) {
             DrawTexture(jogo->vidaTex, jogo->mapa.vidasExtras[i].x * CASA,
                 jogo->mapa.vidasExtras[i].y * CASA + ALTURA_HUD, WHITE);
 
-}
-
-void desenhaHUD(Jogo* jogo) {
-    switch (jogo->modoDebug) {
-        case false:
-            DrawRectangle(0, 0, LARGURA, ALTURA_HUD, BLACK);
-
-            char vidas[20];
-            sprintf(vidas, "Vidas: %d", jogo->jogador.vidas);
-
-            char pontos[20];
-            sprintf(pontos, "Pontos: %d", jogo->jogador.pontuacaoTotal);
-
-            char nivelAtual[20];
-            sprintf(nivelAtual, "Nivel: %d", jogo->nivelAtual);
-
-            DrawText(vidas, 20, 15, 35, WHITE);
-            DrawText(pontos, 400, 15, 35, WHITE);
-            DrawText(nivelAtual, 800, 15, 35, WHITE);
-            break;
-
-        case true:
-            DrawRectangle(0, 0, LARGURA, ALTURA_HUD, DARKBLUE);
-
-            char posJogador[50];
-            sprintf(posJogador, "X: %d, Y: %d", jogo->jogador.pos.x, jogo->jogador.pos.y);
-
-            char temEspada[20];
-            if (jogo->jogador.temEspada == true)
-                sprintf(temEspada, "Espada?: Sim");
-            else sprintf(temEspada, "Espada?: Nao");
-
-            char numMonstro[20];
-            sprintf(numMonstro, "Monstros vivos: %d", jogo->mapa.numMonstros);
-
-            DrawText(posJogador, 20, 15, 35, YELLOW);
-            DrawText(temEspada, 400, 15, 35, YELLOW);
-            DrawText(numMonstro, 800, 15, 35, YELLOW);
-            break;
-    }
 }
 
 

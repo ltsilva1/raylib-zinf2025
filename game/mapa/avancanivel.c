@@ -10,7 +10,7 @@
 void avancaNivel(Jogo* jogo) {
         ++jogo->nivelAtual;
         if (!carregaMapa(jogo)) {
-                jogo->estado = FIM_DE_JOGO;
+                jogo->estado = VITORIA;
                 return;
         }
         inicializarMonstrons(jogo);

@@ -18,6 +18,7 @@ void processarEntrada(Jogo *jogo) {
             if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W)) {moveJogador(&jogo->jogador, &jogo->mapa, 0, -1); jogo->jogador.dir = CIMA;}
             if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S)) {moveJogador(&jogo->jogador, &jogo->mapa, 0, 1); jogo->jogador.dir = BAIXO;}
             if (IsKeyPressed(KEY_J)) {jogo->jogador.instantesEspada = 0.5f;}
+            if (IsKeyPressed(KEY_ENTER)) {jogo->estado = PAUSADO;}
             break;
 
         case MENU:
@@ -45,6 +46,7 @@ void processarEntrada(Jogo *jogo) {
                 }
             }
             break;
+
         case FIM_DE_JOGO:
             if (IsKeyPressed(KEY_DOWN))
                 if (jogo->seletorMenu < 2)
@@ -68,6 +70,9 @@ void processarEntrada(Jogo *jogo) {
                         break;
                 }
             }
+        case PAUSADO:
+            if (IsKeyPressed(KEY_ENTER)) {jogo->estado = JOGANDO;}
+            break;
     }
 }
 

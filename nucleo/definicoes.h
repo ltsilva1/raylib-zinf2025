@@ -15,7 +15,9 @@ typedef enum {
     JOGANDO,
     MENU,
     PAUSADO,
-    FIM_DE_JOGO
+    FIM_DE_JOGO,
+    VITORIA,
+    SCOREBOARDS_TABELA
 } Estado;
 
 typedef struct {

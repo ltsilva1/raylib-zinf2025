@@ -8,6 +8,5 @@ void desenhaMonstro(Jogo* jogo);
 void desenhaJogador(Jogo* jogo);
 void desenhaEspada(Jogo* jogo);
 void desenhaVida(Jogo* jogo);
-void desenhaHUD(Jogo* jogo);
 
 #endif //DESENHA_PROT_H
