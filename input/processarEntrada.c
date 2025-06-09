@@ -1,5 +1,6 @@
 #include "processarEntrada.h"
 #include "raylib.h"
+#include "startup.h"
 #include "external/miniaudio.h"
 #include "../nucleo/definicoes.h"
 
@@ -38,7 +39,7 @@ void processarEntrada(Jogo *jogo) {
                         //Carregar jogo
                         break;
                     case 2:
-                        //Carregar scoreboard
+                        jogo->estado = SCOREBOARDS_TABELA;
                         break;
                     case 3:
                         CloseWindow();
@@ -73,6 +74,28 @@ void processarEntrada(Jogo *jogo) {
         case PAUSADO:
             if (IsKeyPressed(KEY_ENTER)) {jogo->estado = JOGANDO;}
             break;
+
+        case VITORIA:
+            if (IsKeyPressed(KEY_DOWN))
+                if (jogo->seletorMenu < 2)
+                    jogo->seletorMenu += 1;
+            if (IsKeyPressed(KEY_UP))
+                if (jogo->seletorMenu > 0)
+                    jogo->seletorMenu -= 1;
+
+            if (IsKeyPressed((KEY_ENTER))) {
+                switch (jogo->seletorMenu) {
+                    case 0:
+                        jogo->estado = MENU;
+                        jogo->seletorMenu = 0;
+                        break;
+                    case 1:
+                        jogo->estado = MENU;
+                        jogo->seletorMenu = 0;
+                        Inicializar(jogo);
+                        break;
+                }
+            }
     }
 }
 

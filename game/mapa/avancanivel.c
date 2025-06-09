@@ -6,11 +6,13 @@
 #include "avancanivel.h"
 
 #include "mapa.h"
+#include "placar.h"
 
 void avancaNivel(Jogo* jogo) {
         ++jogo->nivelAtual;
         if (!carregaMapa(jogo)) {
                 jogo->estado = VITORIA;
+                atualizaPlacar(jogo);
                 return;
         }
         inicializarMonstrons(jogo);

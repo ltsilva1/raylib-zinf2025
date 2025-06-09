@@ -10,6 +10,8 @@ void DesenhaMenuPrincipal(Jogo* jogo);
 void desenhaHUD(Jogo* jogo);
 void DesenhaGameOver (Jogo* jogo);
 void DesenhaPause(Jogo* jogo);
+void DesenhaVitoria(Jogo* jogo);
+void DesenhaPlacar(Jogo* jogo);
 void TesteMapaDebug(Jogo* jogo);
 
 #endif //UI_H

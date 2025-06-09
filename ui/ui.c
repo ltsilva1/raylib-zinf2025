@@ -136,6 +136,75 @@ void DesenhaGameOver (Jogo* jogo) {
 
 }
 
+void DesenhaVitoria(Jogo* jogo) {
+    ClearBackground(BLACK);
+    // Opções do Menu
+    // Você pode definir um array de strings para as opções para facilitar
+    const char* opcoesTexto[2] = {
+        "Reiniciar Jogo",
+        "Voltar ao Menu"
+    };
+
+    const char* titulo = "VITORIA!"; //TROCAR PRA NÃO FICAR DESCARADO!!!!!!
+    int larguraTitulo = MeasureText(titulo, 120); // Mede a largura do texto para centralizar
+    DrawText(titulo, 1200 / 2 - larguraTitulo / 2, 800 / 6 - 30, 120, YELLOW);
+
+
+    int tamanhoFonteOpcao = 30;
+    int espacamentoOpcao = 45; // Espaço vertical entre as opções
+
+    for (int i = 0; i < 2; i++) {
+        Color cor = WHITE;
+        if (i == jogo->seletorMenu) {
+            cor = GOLD; // Cor de destaque para a opção selecionada
+        }
+
+        // Desenha uma seta simples ou marcador para a opção selecionada (opcional)
+        if (i == jogo->seletorMenu) {
+            DrawText(">", 500 - 40,
+                     800 / 2 + i * espacamentoOpcao - (tamanhoFonteOpcao/2), tamanhoFonteOpcao, GOLD);
+        }
+
+        DrawText(opcoesTexto[i],
+                 500,
+                 800 / 2 + i * espacamentoOpcao - (tamanhoFonteOpcao/2), // Ajusta para centralizar verticalmente
+                 tamanhoFonteOpcao,
+                 cor);
+    }
+}
+
+void DesenhaPlacar(Jogo* jogo) {
+    ClearBackground(BLACK);
+
+    const char* titulo = "Placar:"; //TROCAR PRA NÃO FICAR DESCARADO!!!!!!
+    int larguraTitulo = MeasureText(titulo, 60); // Mede a largura do texto para centralizar
+    DrawText(titulo, 1200 / 2 - larguraTitulo / 2, 800 / 6 - 30, 60, YELLOW);
+
+    char pos1[100];
+    sprintf(pos1, "Jogador: %s, Pontuacao: %d", jogo->score[0].nome, jogo->score[0].score);
+
+    char pos2[100];
+    sprintf(pos2, "Jogador: %s, Pontuacao: %d", jogo->score[1].nome, jogo->score[1].score);
+
+    char pos3[100];
+    sprintf(pos3, "Jogador: %s, Pontuacao: %d", jogo->score[2].nome, jogo->score[2].score);
+
+    char pos4[100];
+    sprintf(pos4, "Jogador: %s, Pontuacao: %d", jogo->score[3].nome, jogo->score[3].score);
+
+    char pos5[100];
+    sprintf(pos5, "Jogador: %s, Pontuacao: %d", jogo->score[4].nome, jogo->score[4].score);
+
+    DrawText(pos1, 300, 200, 35, WHITE);
+    DrawText(pos2, 300, 300, 35, WHITE);
+    DrawText(pos3, 300,400, 35, WHITE);
+    DrawText(pos4, 300, 500, 35, WHITE);
+    DrawText(pos5, 300,600, 35, WHITE);
+
+
+
+}
+
 #include <stdio.h> // Para snprintf
 
 // Função de debug para desenhar a matriz do mapa como texto na tela

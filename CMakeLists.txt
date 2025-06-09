@@ -36,6 +36,8 @@ add_executable(${PROJECT_NAME} main.c
         input/processarEntrada.h
         nucleo/startup.c
         nucleo/startup.h
+        nucleo/placar.c
+        nucleo/placar.h
         game/monstro/monstro.h
         game/monstro/monstro.c
         nucleo/logica.c

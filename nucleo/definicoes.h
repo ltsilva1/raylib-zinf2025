@@ -11,6 +11,11 @@
 #ifndef DEFINICOES_H
 #define DEFINICOES_H
 
+typedef struct {
+    char nome[20];
+    int score;
+} Score;
+
 typedef enum {
     JOGANDO,
     MENU,
@@ -41,6 +46,7 @@ typedef enum {
 
 
 typedef struct {
+    char nome[20];
     PosicaoGrade pos;
     Orientacao dir;
     Texturas tex;
@@ -77,6 +83,7 @@ typedef struct {
 
 typedef struct {
     Estado estado;
+    Score score[5];
     int seletorMenu;
     Jogador jogador;
     Mapa mapa;

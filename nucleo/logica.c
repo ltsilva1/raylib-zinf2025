@@ -9,25 +9,26 @@
 
 
 void processarLogica(Jogo *jogo) {
-            moveMonstro(&jogo->jogador, jogo->mapa.monstro, jogo->mapa.numMonstros, &jogo->mapa);
+    if (jogo->estado == JOGANDO) {
+        moveMonstro(&jogo->jogador, jogo->mapa.monstro, jogo->mapa.numMonstros, &jogo->mapa);
 
-            pegaEspada(&jogo->jogador, &jogo->mapa);
+        pegaEspada(&jogo->jogador, &jogo->mapa);
 
-            pegaVida(&jogo->jogador, &jogo->mapa);
+        pegaVida(&jogo->jogador, &jogo->mapa);
 
-            danoJogador(&jogo->jogador, jogo->mapa.monstro);
-            if (jogo->jogador.vidas <= 0) {
-                jogo->estado = FIM_DE_JOGO;
-                inicializarJogador(jogo);
-            }
-            if (jogo->jogador.instantesInvencibilidade > 0) {
-                jogo->jogador.instantesInvencibilidade -= GetFrameTime();
-            }
+        danoJogador(&jogo->jogador, jogo->mapa.monstro);
+        if (jogo->jogador.vidas <= 0) {
+            jogo->estado = FIM_DE_JOGO;
+            inicializarJogador(jogo);
+        }
+        if (jogo->jogador.instantesInvencibilidade > 0) {
+            jogo->jogador.instantesInvencibilidade -= GetFrameTime();
+        }
 
-            ataqueEspada(jogo);
+        ataqueEspada(jogo);
 
-            if (jogo->mapa.numMonstros == 0) {
-                avancaNivel(jogo);
-            }
-
+        if (jogo->mapa.numMonstros == 0) {
+            avancaNivel(jogo);
+        }
+    }
 }

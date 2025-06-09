@@ -4,6 +4,7 @@
 
 #include "../nucleo/startup.h"
 #include "../game/mapa/mapa.h"
+#include "../nucleo/placar.h"
 #include <stdlib.h>
 #include <time.h>
 
@@ -13,6 +14,7 @@ void Inicializar(Jogo *jogo) {
     jogo->nivelAtual = 1;
     jogo->seletorMenu = 0;
     jogo->modoDebug = false;
+    lePlacar(jogo);
     carregarTexturas(jogo);
     carregaMapa(jogo);
     inicializarMonstrons(jogo);
