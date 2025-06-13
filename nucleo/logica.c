@@ -10,8 +10,7 @@
 
 void processarLogica(Jogo *jogo) {
     if (jogo->estado == JOGANDO) {
-        float deltaTime = 0.0f;
-        deltaTime = GetFrameTime();
+        float deltaTime = GetFrameTime();
         moveMonstro(&jogo->jogador, jogo->mapa.monstro, jogo->mapa.numMonstros, &jogo->mapa, deltaTime);
 
         pegaEspada(&jogo->jogador, &jogo->mapa);
@@ -21,7 +20,7 @@ void processarLogica(Jogo *jogo) {
         danoJogador(&jogo->jogador, jogo->mapa.monstro);
         if (jogo->jogador.vidas <= 0) {
             jogo->estado = FIM_DE_JOGO;
-            inicializarJogador(jogo);
+            return;
         }
         if (jogo->jogador.instantesInvencibilidade > 0) {
             jogo->jogador.instantesInvencibilidade -= deltaTime;
@@ -32,5 +31,5 @@ void processarLogica(Jogo *jogo) {
         if (jogo->mapa.numMonstros == 0) {
             avancaNivel(jogo);
         }
-    }
+    } else return;
 }

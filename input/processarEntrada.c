@@ -86,15 +86,15 @@ void processarEntrada(Jogo *jogo) {
                         // Carregar jogo
                         break;
                     case 1:
+                        Inicializar(jogo);
                         jogo->estado = JOGANDO;
-                        jogo->seletorMenu = 0;
                         break;
                     case 2:
-                        jogo->estado = MENU;
-                        jogo->seletorMenu = 0;
+                        Inicializar(jogo);
                         break;
                 }
             }
+            break;
         case PAUSADO:
             if (IsKeyPressed(KEY_ENTER)) {jogo->estado = JOGANDO;}
             break;

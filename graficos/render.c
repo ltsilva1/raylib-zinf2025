@@ -120,7 +120,7 @@ void desenhaEspada(Jogo* jogo) {
 }
 
 void desenhaVida(Jogo* jogo) {
-    for (int i = 0; i < 5; ++i)
+    for (int i = 0; i < jogo->mapa.numVidasExtras; ++i)
         if (jogo->mapa.vidasPegadas[i] == 0)
             DrawTexture(jogo->vidaTex, jogo->mapa.vidasExtras[i].x * CASA,
                 jogo->mapa.vidasExtras[i].y * CASA + ALTURA_HUD, WHITE);

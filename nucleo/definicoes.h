@@ -71,14 +71,16 @@ typedef struct {
 } Monstro;
 
 typedef struct {
-    char mapa[16][25];
+    char mapa[16][24];
     PosicaoGrade posInicialJogador;
     PosicaoGrade posInicialEspada;
     Monstro monstro[10];
     int numMonstros;
+    int numMonstrosInicial;
     bool espadaPegada;
     PosicaoGrade vidasExtras[5];
     int vidasPegadas[5];
+    int numVidasExtras;
     Texturas tex;
     Texture2D chao;
 } Mapa;

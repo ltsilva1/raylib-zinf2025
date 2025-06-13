@@ -28,7 +28,7 @@ void pegaEspada(Jogador* jogador, Mapa* mapa) {
 }
 
 void pegaVida(Jogador* jogador, Mapa* mapa) {
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < mapa->numVidasExtras; i++) {
         if (mapa->vidasPegadas[i] == 0 && jogador->pos.x == mapa->vidasExtras[i].x && jogador->pos.y == mapa->vidasExtras[i].y) {
             jogador->vidas += 1;
             mapa->vidasPegadas[i] = 1;

@@ -18,6 +18,10 @@ const float intervaloMovimento = 0.3f;
 
 void moveMonstro(Jogador* jogador, Monstro monstro[], int qtd_monstros, Mapa* mapa, float deltaTime) {
     for (int i = 0; i < qtd_monstros; i++) {
+        if (monstro[i].vivo == 0) {
+            continue; // Pula monstros mortos
+        }
+
         monstro[i].tempoParaMover -= deltaTime;//subtrai um pequeno pedaço do temporizador de cada monstro
 
         //esse if faz com que o monstro se se mova quando o seu temporizador for igual a zero

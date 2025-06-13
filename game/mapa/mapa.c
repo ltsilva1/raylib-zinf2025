@@ -13,13 +13,28 @@ int carregaMapa (Jogo* meuJogo) {
         return 0;
     }
 
-    for (int i = 0; i < 16; i++) {
-        fgets(meuJogo->mapa.mapa[i], 24+2, f);  // lê até 24 caracteres + '\n' + '\0'
+    //for (int i = 0; i < 16; i++) {
+     //   fgets(meuJogo->mapa.mapa[i], 26, f);  // lê até 24 caracteres + '\n' + '\0'
+    //}
+
+    for (int i = 0; i < 16; i++) { // Loop para as 16 linhas
+        for (int j = 0; j < 24; j++) { // Loop para as 24 colunas
+            char caractereConsumido;
+
+            // Este loop 'while' interno vai consumir e ignorar TODOS os caracteres de nova linha que encontrar.
+            do {
+                caractereConsumido = fgetc(f);
+            } while (caractereConsumido == '\n');
+
+            // Armazena o caractere válido matriz do mapa.
+            meuJogo->mapa.mapa[i][j] = caractereConsumido;
+        }
     }
+
     fclose(f);
 
     //Testa processamento do mapa
-    for (int i = 0; i < 16; i++) {
+    /*for (int i = 0; i < 16; i++) {
         for (int j = 0; j < 24; j++) {
             char c = meuJogo->mapa.mapa[i][j];
             if (c == '\n' || c == '\0')
@@ -27,24 +42,26 @@ int carregaMapa (Jogo* meuJogo) {
             printf("%c", c);
         }
         printf("\n");
-    }
+    } */
 
 
     // Repassa a localização dos monstros no mapa para a estrutura do jogo
-    meuJogo->mapa.numMonstros = 0;
+    meuJogo->mapa.numMonstrosInicial = 0;
 
     for (int i = 0; i < 16; i++) {
         for (int j = 0; j < 24; j++) {
             if (meuJogo->mapa.mapa[i][j] == 'M') {
-                if (meuJogo->mapa.numMonstros<10) {
-                    meuJogo->mapa.monstro[meuJogo->mapa.numMonstros].pos.x = j;
-                    meuJogo->mapa.monstro[meuJogo->mapa.numMonstros].pos.y = i;
-                    meuJogo->mapa.numMonstros++;
+                if (meuJogo->mapa.numMonstrosInicial<10) {
+                    meuJogo->mapa.monstro[meuJogo->mapa.numMonstrosInicial].pos.x = j;
+                    meuJogo->mapa.monstro[meuJogo->mapa.numMonstrosInicial].pos.y = i;
+                    meuJogo->mapa.numMonstrosInicial++;
                     meuJogo->mapa.mapa[i][j] = ' ';
                 }
             }
         }
     }
+    meuJogo->mapa.numMonstros = meuJogo->mapa.numMonstrosInicial;
+
 
     // Repassa a localização do jogador no mapa para a estrutura do jogo
     for (int i = 0; i < 16; i++) {
@@ -85,5 +102,7 @@ int carregaMapa (Jogo* meuJogo) {
             }
         }
     }
+
+    meuJogo->mapa.numVidasExtras = contaVidasExtras;
     return 1;
 }
