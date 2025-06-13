@@ -6,6 +6,6 @@
 #define MONSTRO_H
 #include "../../nucleo/definicoes.h"
 
-void moveMonstro(Jogador* jogador, Monstro monstro[], int qtd_monstros, Mapa* mapa);
+void moveMonstro(Jogador* jogador, Monstro monstro[], int qtd_monstros, Mapa* mapa, float deltaTime);
 
 #endif //MONSTRO_H

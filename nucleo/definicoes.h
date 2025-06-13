@@ -57,6 +57,7 @@ typedef struct {
     float instantesInvencibilidade;
     float instantesEspada;
     PosicaoGrade tilesAtaque[3];
+    float tempoParaJogadorMover;
 } Jogador;
 
 typedef struct {
@@ -66,6 +67,7 @@ typedef struct {
     int pontuacao;
     int vivo; // bool
     int passosRestantes;
+    float tempoParaMover;
 } Monstro;
 
 typedef struct {
