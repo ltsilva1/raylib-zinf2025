@@ -57,7 +57,11 @@ typedef struct {
     float instantesInvencibilidade;
     float instantesEspada;
     PosicaoGrade tilesAtaque[3];
-    float tempoParaJogadorMover;
+    float tempoParaJogadorMover; //????????????????? OQ CARALHOS É ISSO GABRIEL
+    //bool estaSeMovendo; // 0 para parado, 1 para se movendo
+    //PosicaoGrade posOrigem; // De qual casa o movimento começou
+    //PosicaoGrade posDestino; // Para qual casa o movimento vai
+    //float progressoMovimento; // Um timer que vai de 0.0 até a duração do movimento
 } Jogador;
 
 typedef struct {

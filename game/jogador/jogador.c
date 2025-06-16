@@ -10,6 +10,9 @@
 #include <stdio.h>
 
 void moveJogador(Jogador* jogador, Mapa* mapa, int direcaoX, int direcaoY) {
+    //if (jogador->estaSeMovendo == 1) { // Só permite um novo movimento se o jogador não estiver se movendo
+    //    return;                        // Retorna, caso já esteja
+    //}
     int proximaPosicaoX = jogador->pos.x + direcaoX;
     int proximaPosicaoY = jogador->pos.y + direcaoY;
 
