@@ -50,7 +50,7 @@ void moveMonstro(Jogador* jogador, Monstro monstro[], int qtd_monstros, Mapa* ma
             } else {
                 //caso o monstro nao esteja em uma sequencia, inicia uma nova
                 //int movimentaOuNao = rand() % 30;
-                if (monstro[i].tempoParaMover > 0 ) {
+                //if (monstro[i].tempoParaMover > 0 ) {
                     tentarMovimentarEsteTurno = true;
                     int novaDirRand = rand() % 4; // 0:N, 1:S, 2:L, 3:O
                     switch (novaDirRand) {
@@ -72,7 +72,7 @@ void moveMonstro(Jogador* jogador, Monstro monstro[], int qtd_monstros, Mapa* ma
                             break;
                     }
                     monstro[i].passosRestantes = 3; //inicia uma nova sequência de 3 passos
-                }
+                //}
             }
 
             //se o monstro deve tentar se mover (seja continuando ou começando uma nova sequência)
