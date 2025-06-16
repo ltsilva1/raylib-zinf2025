@@ -60,6 +60,15 @@ void inicializarMonstrons(Jogo* jogo) {
         jogo->mapa.monstro[i].tex.sul = LoadTexture(".recursos/inimigos/inimigo_baixo.png");
         jogo->mapa.monstro[i].tex.oeste = LoadTexture(".recursos/inimigos/inimigo_direita.png");
         jogo->mapa.monstro[i].tex.leste = LoadTexture(".recursos/inimigos/inimigo_esquerda.png");
+
+        // --- A CORREÇÃO CRÍTICA ESTÁ AQUI ---
+        // Garante que o monstro não está no meio de uma sequência de passos quando começa
+        jogo->mapa.monstro[i].passosRestantes = 0;
+
+        // Define um tempo inicial pequeno e aleatório (entre 0.0s e 1.0s)
+        // para que os monstros comecem a se mover em momentos diferentes.
+        jogo->mapa.monstro[i].tempoParaMover = (float) (rand() % 101) / 100.0f;
+
     }
 
     for (int i = jogo->mapa.numMonstrosInicial; i < 10; ++i)

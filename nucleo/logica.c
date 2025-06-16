@@ -5,14 +5,13 @@
 #include "../game/jogador/jogador.h"
 #include "../game/jogador/espada.h"
 #include "../game/mapa/avancanivel.h"
-#define MAX_MONSTROS 10
 
 
 
 void processarLogica(Jogo *jogo) {
     if (jogo->estado == JOGANDO) {
         float deltaTime = GetFrameTime();
-        moveMonstro(&jogo->jogador, jogo->mapa.monstro, MAX_MONSTROS, &jogo->mapa, deltaTime);
+        moveMonstro(&jogo->jogador, jogo->mapa.monstro, jogo->mapa.numMonstros, &jogo->mapa, deltaTime);
 
         pegaEspada(&jogo->jogador, &jogo->mapa);
 
@@ -28,15 +27,6 @@ void processarLogica(Jogo *jogo) {
         }
 
         ataqueEspada(jogo);
-
-        int monstrosVivos = 0;
-        for (int i = 0; i < MAX_MONSTROS; i++) {
-            if (jogo->mapa.monstro[i].vivo == 1) {
-                monstrosVivos++;
-            }
-        }
-
-        jogo->mapa.numMonstros = monstrosVivos;
 
         if (jogo->mapa.numMonstros == 0) {
             avancaNivel(jogo);
