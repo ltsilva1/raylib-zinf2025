@@ -6,5 +6,6 @@ void salvaPlacar (Jogo* jogo);
 void lePlacar (Jogo* jogo);
 void ordenaPlacar(Score placar[]);
 void atualizaPlacar (Jogo* jogo);
+int EhNovoRecorde(const Jogo* jogo);
 
 #endif //CARREGAR_H

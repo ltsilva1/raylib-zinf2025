@@ -5,6 +5,7 @@
 #define ALTURA 860
 #define CASA 50
 #define ALTURA_HUD 60
+#define MAX_NOME_JOGADOR 20
 #include "raylib.h"
 #include <stdbool.h>
 
@@ -22,7 +23,8 @@ typedef enum {
     PAUSADO,
     FIM_DE_JOGO,
     VITORIA,
-    SCOREBOARDS_TABELA
+    SCOREBOARDS_TABELA,
+    ENTRANDO_NOME_RANKING
 } Estado;
 
 typedef struct {
@@ -99,6 +101,9 @@ typedef struct {
     Texture2D vidaTex;
     Texture2D espadaTex;
     bool modoDebug;
+    // { CAMPOS PARA INPUT DE NOME }
+    char nomeBuffer[MAX_NOME_JOGADOR + 1]; // Buffer para guardar o nome (+1 para o '\0')
+    int contadorNome; // Quantos caracteres já foram digitados
 } Jogo;
 
 #endif //DEFINICOES_H

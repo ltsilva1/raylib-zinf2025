@@ -68,3 +68,12 @@ void atualizaPlacar (Jogo* jogo) {
 
 
 }
+
+int EhNovoRecorde(const Jogo* jogo) {
+    if (jogo->jogador.pontuacaoTotal > jogo->score[5 - 1].score) {
+        return 1;
+    }
+    return 0;
+
+
+}

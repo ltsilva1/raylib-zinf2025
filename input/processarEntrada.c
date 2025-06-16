@@ -1,4 +1,9 @@
 #include "processarEntrada.h"
+
+#include <stdio.h>
+#include <string.h>
+
+#include "placar.h"
 #include "raylib.h"
 #include "startup.h"
 #include "external/miniaudio.h"
@@ -94,8 +99,51 @@ void processarEntrada(Jogo *jogo) {
                 }
             }
             break;
+        case SCOREBOARDS_TABELA:
+            if (IsKeyPressed(KEY_ENTER)) {jogo->estado = MENU;}
+            break;
+
         case PAUSADO:
             if (IsKeyPressed(KEY_ENTER)) {jogo->estado = JOGANDO;}
+            break;
+
+        case ENTRANDO_NOME_RANKING:
+            int tecla = GetCharPressed();
+
+            // Processa todas as teclas na fila da Raylib
+            while (tecla > 0) {
+                // Aceita apenas caracteres imprimíveis e se houver espaço no buffer
+                if ((tecla >= 32) && (tecla <= 125) && (jogo->contadorNome < MAX_NOME_JOGADOR)) {
+                    jogo->nomeBuffer[jogo->contadorNome] = (char)tecla;
+                    jogo->contadorNome++;
+                    jogo->nomeBuffer[jogo->contadorNome] = '\0'; // Mantém a string terminada
+                }
+                tecla = GetCharPressed(); // Pega a próxima tecla na fila
+            }
+
+            // Verifica a tecla BACKSPACE para apagar
+            if (IsKeyPressed(KEY_BACKSPACE)) {
+                if (jogo->contadorNome > 0) {
+                    jogo->contadorNome--;
+                    jogo->nomeBuffer[jogo->contadorNome] = '\0';
+                }
+            }
+
+            // Verifica a tecla ENTER para confirmar
+            if (IsKeyPressed(KEY_ENTER)) {
+                if (jogo->contadorNome == 0) { // Se não digitou nada, usa um nome padrão
+                    snprintf(jogo->nomeBuffer, MAX_NOME_JOGADOR, "Anonimo");
+                }
+                // Agora sim, atualizamos e salvamos o placar
+                snprintf(jogo->score[5 - 1].nome, MAX_NOME_JOGADOR, "%s", jogo->nomeBuffer);
+                jogo->score[5 - 1].score = jogo->jogador.pontuacaoTotal;
+
+                ordenaPlacar(jogo->score);
+                salvaPlacar(jogo);
+
+                // Muda para a tela de placar ou de game over para mostrar o resultado
+                jogo->estado = SCOREBOARDS_TABELA;
+            }
             break;
 
         case VITORIA:

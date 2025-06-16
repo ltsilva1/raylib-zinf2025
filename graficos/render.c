@@ -32,13 +32,11 @@ void desenhaJogo(Jogo* meuJogo) {
             DesenhaVitoria(meuJogo);
             break;
         case SCOREBOARDS_TABELA:
-            printf("--- DEBUG: Estado do placar ANTES de desenhar ---\n");
-            for (int k = 0; k < 5; k++) {
-                printf("Pos %d: %s - %d\n", k, meuJogo->score[k].nome, meuJogo->score[k].score);
-            }
-            printf("------------------------------------------------\n");
-
             DesenhaPlacar(meuJogo);
+            break;
+        case ENTRANDO_NOME_RANKING:
+            DesenhaTelaEntradaNome(meuJogo);
+            break;
 
     }
 }

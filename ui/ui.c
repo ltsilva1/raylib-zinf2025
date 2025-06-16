@@ -3,6 +3,9 @@
 //
 
 #include "../ui/ui.h"
+
+#include <math.h>
+
 #include "../nucleo/definicoes.h"
 #include "raylib.h"
 #include <stdio.h>
@@ -171,6 +174,43 @@ void DesenhaVitoria(Jogo* jogo) {
                  tamanhoFonteOpcao,
                  cor);
     }
+}
+
+void DesenhaTelaEntradaNome(Jogo* jogo) {
+    ClearBackground(BLACK);
+
+    const char* titulo = "VITORIA!"; //TROCAR PRA NÃO FICAR DESCARADO!!!!!!
+    int larguraTitulo = MeasureText(titulo, 120); // Mede a largura do texto para centralizar
+
+
+    DrawText(titulo, 1200 / 2 - larguraTitulo / 2, 20, 120, YELLOW);
+
+
+    DrawText("NOVO RECORDE!", 1200 / 2 - MeasureText("NOVO RECORDE!", 40) / 2, 150, 40, GOLD);
+
+    char textoScore[50];
+    snprintf(textoScore, 50, "Sua pontuacao: %d", jogo->jogador.pontuacaoTotal);
+    DrawText(textoScore, 1200 / 2 - MeasureText(textoScore, 20) / 2, 220, 20, LIGHTGRAY);
+
+    DrawText("Digite seu nome:", 1200 / 2 - MeasureText("Digite seu nome:", 20) / 2, 350, 20, WHITE);
+
+    // Caixa de texto
+    DrawRectangle(1200 / 2 - 200, 400, 400, 50, LIGHTGRAY);
+    DrawRectangleLines(1200 / 2 - 200, 400, 400, 50, DARKGRAY);
+
+    // Texto digitado
+    DrawText(jogo->nomeBuffer, 1200 / 2 - 190, 410, 40, DARKBLUE);
+
+    // Cursor piscando
+    // fmodf(GetTime(), 1.0f) retorna um valor que varia de 0.0 a 1.0 a cada segundo.
+    // A condição será verdadeira por meio segundo e falsa por meio segundo, fazendo o cursor piscar.
+    if (fmodf(GetTime(), 1.0f) < 0.5f) {
+        // Desenha o cursor no final do texto digitado
+        DrawText("_", 1200 / 2 - 190 + MeasureText(jogo->nomeBuffer, 40), 415, 40, DARKBLUE);
+    }
+
+    DrawText("Pressione ENTER para confirmar", 1200 / 2 - MeasureText("Pressione ENTER para confirmar", 20) / 2, 500, 20, GRAY);
+
 }
 
 void DesenhaPlacar(Jogo* jogo) {
