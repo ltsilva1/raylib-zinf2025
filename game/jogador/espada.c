@@ -40,7 +40,7 @@ void ataqueEspada(Jogo* jogo) {
                 if (jogo->jogador.tilesAtaque[j].y == jogo->mapa.monstro[i].pos.y && jogo->jogador.tilesAtaque[j].x == jogo->mapa.monstro[i].pos.x) {
                     jogo->mapa.monstro[i].vivo = 0;
                     jogo->jogador.pontuacaoTotal += jogo->mapa.monstro[i].pontuacao;
-                    --jogo->mapa.numMonstros;
+                    ;;--jogo->mapa.numMonstros;
                 }
             }
             }
