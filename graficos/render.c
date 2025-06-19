@@ -4,6 +4,8 @@
 #include "../ui/ui.h"
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
+
 #include "definicoes.h"
 
 
@@ -42,11 +44,18 @@ void desenhaJogo(Jogo* meuJogo) {
 }
 
 void desenhaCenario(Jogo* jogo) {
+
     for (int i = 0; i < 16; ++i)
         for (int j = 0; j < 24; ++j) //revisar o 24 ou 25
             if (jogo->mapa.mapa[i][j] == 'P')
                 DrawTexture(jogo->mapa.tex.sul, j * CASA, i * CASA + ALTURA_HUD, WHITE);
-            else DrawTexture(jogo->mapa.chao, j * CASA, i * CASA + ALTURA_HUD, WHITE);
+            else {
+                int mato = jogo->mapa.chaoVariacao[i][j];
+
+                if (mato == 0)
+                DrawTexture(jogo->mapa.chao[0], j * CASA, i * CASA + ALTURA_HUD, WHITE);
+                else DrawTexture(jogo->mapa.chao[1], j * CASA, i * CASA + ALTURA_HUD, WHITE);
+            }
 }
 
 void desenhaMonstro(Jogo* jogo) {

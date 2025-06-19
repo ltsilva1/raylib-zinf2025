@@ -19,9 +19,8 @@ void DesenhaMenuPrincipal(Jogo* jogo) {
 
         // Opções do Menu
         // Você pode definir um array de strings para as opções para facilitar
-        const char* opcoesTexto[4] = {
+        const char* opcoesTexto[3] = {
             "Novo Jogo",
-            "Carregar Jogo",
             "Scoreboard",
             "Sair"
         };
@@ -29,7 +28,7 @@ void DesenhaMenuPrincipal(Jogo* jogo) {
         int tamanhoFonteOpcao = 30;
         int espacamentoOpcao = 45; // Espaço vertical entre as opções
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             Color cor = WHITE;
             if (i == jogo->seletorMenu) {
                 cor = GOLD; // Cor de destaque para a opção selecionada
@@ -98,19 +97,51 @@ void desenhaHUD(Jogo* jogo) {
 }
 
 void DesenhaPause(Jogo* jogo) {
-    char pause[10];
-    sprintf(pause, "PAUSADO");
-    int larguraTitulo = MeasureText(pause, 60); // Mede a largura do texto para centralizar
+    // Desenhar uma caixa/painel para o menu em si
+    float larguraMenu = 500;
+    float alturaMenu = 300;
+    float posXMenu = (LARGURA - larguraMenu) / 2; // Centraliza horizontalmente
+    float posYMenu = (ALTURA - alturaMenu) / 2; // Centraliza verticalmente
+    DrawRectangle(posXMenu, posYMenu, larguraMenu, alturaMenu, Fade(BLACK, 0.2f));
+    DrawRectangleLines(posXMenu, posYMenu, larguraMenu, alturaMenu, LIGHTGRAY);
 
-    DrawText(pause, 1200 / 2 - larguraTitulo / 2, ALTURA / 2, 60, MAROON);
+    // --- 2. O Título ---
+    const char* titulo = "< PAUSADO >";
+    int larguraTitulo = MeasureText(titulo, 50);
+    DrawText(titulo, LARGURA / 2 - larguraTitulo / 2, posYMenu + 30, 50, WHITE);
+
+    // --- 3. As Opções do Menu (parecido com o seu DesenhaGameOver) ---
+    // Conforme o PDF do projeto, as opções são "Continuar", "Voltar ao Menu", "Sair".
+    const char* opcoesTexto[3] = {
+        "Continuar",
+        "Voltar ao Menu",
+        "Sair do Jogo"
+    };
+
+    int tamanhoFonteOpcao = 30;
+    int espacamentoOpcao = 50;
+    float yInicialTexto = posYMenu + 120; // Posição Y inicial para a primeira opção
+
+    for (int i = 0; i < 3; i++) {
+        // Usa uma variável de seletor específica para o menu de pausa para não conflitar
+        // com o menu principal ou de game over. Você precisará adicionar 'seletorMenuPausa' na struct Jogo.
+        Color cor = WHITE;
+        if (i == jogo->seletorMenu) {
+            cor = GOLD; // Cor de destaque para a opção selecionada
+        }
+
+        float larguraTexto = MeasureText(opcoesTexto[i], tamanhoFonteOpcao);
+        float posXTexto = LARGURA / 2 - larguraTexto / 2; // Centraliza o texto
+        float posYTexto = yInicialTexto + i * espacamentoOpcao;
+
+        DrawText(opcoesTexto[i], posXTexto, posYTexto, tamanhoFonteOpcao, cor);
+    }
 }
-
 void DesenhaGameOver (Jogo* jogo) {
     ClearBackground(BLACK);
     // Opções do Menu
     // Você pode definir um array de strings para as opções para facilitar
-    const char* opcoesTexto[3] = {
-        "Carregar Jogo",
+    const char* opcoesTexto[2] = {
         "Reiniciar Jogo",
         "Voltar ao Menu"
     };
@@ -118,7 +149,7 @@ void DesenhaGameOver (Jogo* jogo) {
     int tamanhoFonteOpcao = 30;
     int espacamentoOpcao = 45; // Espaço vertical entre as opções
 
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 2; i++) {
         Color cor = WHITE;
         if (i == jogo->seletorMenu) {
             cor = GOLD; // Cor de destaque para a opção selecionada
@@ -179,37 +210,37 @@ void DesenhaVitoria(Jogo* jogo) {
 void DesenhaTelaEntradaNome(Jogo* jogo) {
     ClearBackground(BLACK);
 
-    const char* titulo = "VITORIA!"; //TROCAR PRA NÃO FICAR DESCARADO!!!!!!
+    const char* titulo = "< VITORIA >"; //TROCAR PRA NÃO FICAR DESCARADO!!!!!!
     int larguraTitulo = MeasureText(titulo, 120); // Mede a largura do texto para centralizar
 
 
-    DrawText(titulo, 1200 / 2 - larguraTitulo / 2, 20, 120, YELLOW);
+    DrawText(titulo, 1200 / 2 - larguraTitulo / 2, 100, 120, YELLOW);
 
 
-    DrawText("NOVO RECORDE!", 1200 / 2 - MeasureText("NOVO RECORDE!", 40) / 2, 150, 40, GOLD);
+    DrawText("NOVO RECORDE!", 1200 / 2 - MeasureText("NOVO RECORDE!", 40) / 2, 250 + 50, 40, GOLD);
 
     char textoScore[50];
     snprintf(textoScore, 50, "Sua pontuacao: %d", jogo->jogador.pontuacaoTotal);
-    DrawText(textoScore, 1200 / 2 - MeasureText(textoScore, 20) / 2, 220, 20, LIGHTGRAY);
+    DrawText(textoScore, 1200 / 2 - MeasureText(textoScore, 20) / 2, 300 + 50, 20, LIGHTGRAY);
 
-    DrawText("Digite seu nome:", 1200 / 2 - MeasureText("Digite seu nome:", 20) / 2, 350, 20, WHITE);
+    DrawText("Digite seu nome:", 1200 / 2 - MeasureText("Digite seu nome:", 20) / 2, 350 + 100, 20, WHITE);
 
     // Caixa de texto
-    DrawRectangle(1200 / 2 - 200, 400, 400, 50, LIGHTGRAY);
-    DrawRectangleLines(1200 / 2 - 200, 400, 400, 50, DARKGRAY);
+    DrawRectangle(1200 / 2 - 200, 400 +100, 400, 50, BLACK);
+    DrawRectangleLines(1200 / 2 - 200, 400+100, 400, 50, LIGHTGRAY);
 
     // Texto digitado
-    DrawText(jogo->nomeBuffer, 1200 / 2 - 190, 410, 40, DARKBLUE);
+    DrawText(jogo->nomeBuffer, 1200 / 2 - 190, 410 + 100, 40, GOLD);
 
     // Cursor piscando
     // fmodf(GetTime(), 1.0f) retorna um valor que varia de 0.0 a 1.0 a cada segundo.
     // A condição será verdadeira por meio segundo e falsa por meio segundo, fazendo o cursor piscar.
     if (fmodf(GetTime(), 1.0f) < 0.5f) {
         // Desenha o cursor no final do texto digitado
-        DrawText("_", 1200 / 2 - 190 + MeasureText(jogo->nomeBuffer, 40), 415, 40, DARKBLUE);
+        DrawText("_", 1200 / 2 - 190 + MeasureText(jogo->nomeBuffer, 40), 415 + 100, 40, GOLD);
     }
 
-    DrawText("Pressione ENTER para confirmar", 1200 / 2 - MeasureText("Pressione ENTER para confirmar", 20) / 2, 500, 20, GRAY);
+    DrawText("Pressione ENTER para confirmar", 1200 / 2 - MeasureText("Pressione ENTER para confirmar", 20) / 2, 500+100, 20, GRAY);
 
 }
 
@@ -241,7 +272,10 @@ void DesenhaPlacar(Jogo* jogo) {
     DrawText(pos4, 300, 500, 35, WHITE);
     DrawText(pos5, 300,600, 35, WHITE);
 
-
+    // Instrução
+    DrawText("Use ENTER para voltar ao menu",
+             1200 / 2 - MeasureText("Use ENTER para voltar ao menu", 20) / 2,
+             800 - 60, 20, LIGHTGRAY);
 
 }
 

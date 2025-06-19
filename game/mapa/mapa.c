@@ -44,6 +44,12 @@ int carregaMapa (Jogo* meuJogo) {
         printf("\n");
     } */
 
+    for (int i = 0; i < 16; i++) {
+        for (int j = 0; j < 24; j++) {
+            meuJogo->mapa.chaoVariacao[i][j] = rand() % 2; // Salva 0 ou 1
+        }
+    }
+
 
     // Repassa a localização dos monstros no mapa para a estrutura do jogo
     meuJogo->mapa.numMonstrosInicial = 0;

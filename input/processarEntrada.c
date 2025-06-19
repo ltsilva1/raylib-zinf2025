@@ -45,31 +45,31 @@ void processarEntrada(Jogo *jogo) {
                     jogo->jogador.tempoParaJogadorMover = intervaloMovimento;
                 }
             }
-                if (IsKeyPressed(KEY_J)) {jogo->jogador.instantesEspada = 0.5f;}
+                if (IsKeyPressed(KEY_J))
+                    if (jogo->jogador.temEspada == true)
+                        jogo->jogador.instantesEspada = 0.5f;
                 if (IsKeyPressed(KEY_ENTER)) {jogo->estado = PAUSADO;}
 
             break;
 
         case MENU:
-            if (IsKeyPressed(KEY_DOWN))
-                if (jogo->seletorMenu < 3)
+            if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S))
+                if (jogo->seletorMenu < 2)
                     jogo->seletorMenu += 1;
-            if (IsKeyPressed(KEY_UP))
+            if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W))
                 if (jogo->seletorMenu > 0)
                     jogo->seletorMenu -= 1;
 
             if (IsKeyPressed((KEY_ENTER))) {
                 switch (jogo->seletorMenu) {
                     case 0:
+                        Inicializar(jogo);
                         jogo->estado = JOGANDO;
                         break;
                     case 1:
-                        //Carregar jogo
-                        break;
-                    case 2:
                         jogo->estado = SCOREBOARDS_TABELA;
                         break;
-                    case 3:
+                    case 2:
                         CloseWindow();
                         break;
                 }
@@ -77,23 +77,20 @@ void processarEntrada(Jogo *jogo) {
             break;
 
         case FIM_DE_JOGO:
-            if (IsKeyPressed(KEY_DOWN))
-                if (jogo->seletorMenu < 2)
+            if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S))
+                if (jogo->seletorMenu < 1)
                     jogo->seletorMenu += 1;
-            if (IsKeyPressed(KEY_UP))
+            if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W))
                 if (jogo->seletorMenu > 0)
                     jogo->seletorMenu -= 1;
 
             if (IsKeyPressed((KEY_ENTER))) {
                 switch (jogo->seletorMenu) {
                     case 0:
-                        // Carregar jogo
-                        break;
-                    case 1:
                         Inicializar(jogo);
                         jogo->estado = JOGANDO;
                         break;
-                    case 2:
+                    case 1:
                         Inicializar(jogo);
                         break;
                 }
@@ -104,7 +101,26 @@ void processarEntrada(Jogo *jogo) {
             break;
 
         case PAUSADO:
-            if (IsKeyPressed(KEY_ENTER)) {jogo->estado = JOGANDO;}
+            if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S))
+                if (jogo->seletorMenu < 2)
+                    jogo->seletorMenu += 1;
+            if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W))
+                if (jogo->seletorMenu > 0)
+                    jogo->seletorMenu -= 1;
+
+            if (IsKeyPressed((KEY_ENTER))) {
+                switch (jogo->seletorMenu) {
+                    case 0:
+                        jogo->estado = JOGANDO;
+                        break;
+                    case 1:
+                        Inicializar(jogo);
+                        break;
+                    case 2:
+                        CloseWindow();
+                        break;
+                }
+            }
             break;
 
         case ENTRANDO_NOME_RANKING:
@@ -147,10 +163,10 @@ void processarEntrada(Jogo *jogo) {
             break;
 
         case VITORIA:
-            if (IsKeyPressed(KEY_DOWN))
+            if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S))
                 if (jogo->seletorMenu < 2)
                     jogo->seletorMenu += 1;
-            if (IsKeyPressed(KEY_UP))
+            if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W))
                 if (jogo->seletorMenu > 0)
                     jogo->seletorMenu -= 1;
 

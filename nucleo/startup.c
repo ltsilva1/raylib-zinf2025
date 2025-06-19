@@ -32,9 +32,9 @@ void inicializarJogador(Jogo *jogo) {
         jogo->jogador.tilesAtaque[i].y = -1;
     }
     jogo->jogador.temEspada = 0;
+    jogo->jogador.instantesEspada = 0;
     jogo->jogador.instantesInvencibilidade = 0;
-
-
+    jogo->jogador.tempoParaJogadorMover = 0.0f;
 }
 
 void carregarTexturas(Jogo* jogo) {
@@ -44,7 +44,9 @@ void carregarTexturas(Jogo* jogo) {
     jogo->jogador.tex.oeste = LoadTexture(".recursos/jogador/jogador_esquerda.png");
 
     jogo->mapa.tex.sul = LoadTexture(".recursos/paredes/parede.png");
-    jogo->mapa.chao = LoadTexture(".recursos/chao/chao_placeholder.png");
+
+    jogo->mapa.chao[0] = LoadTexture(".recursos/chao/chao_placeholder.png");
+    jogo->mapa.chao[1] = LoadTexture(".recursos/chao/chao_semmato.png");
 
     jogo->vidaTex = LoadTexture(".recursos/items/vida.png");
     jogo->espadaTex = LoadTexture(".recursos/items/espada.png");

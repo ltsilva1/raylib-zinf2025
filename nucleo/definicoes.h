@@ -78,6 +78,7 @@ typedef struct {
 
 typedef struct {
     char mapa[16][24];
+    int chaoVariacao[16][24];
     PosicaoGrade posInicialJogador;
     PosicaoGrade posInicialEspada;
     Monstro monstro[10];
@@ -88,7 +89,7 @@ typedef struct {
     int vidasPegadas[5];
     int numVidasExtras;
     Texturas tex;
-    Texture2D chao;
+    Texture2D chao[2];
 } Mapa;
 
 typedef struct {
