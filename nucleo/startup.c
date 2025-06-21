@@ -9,6 +9,7 @@
 #include <time.h>
 
 void Inicializar(Jogo *jogo) {
+    carregarTexturas(jogo);
     srand(time(NULL));
     jogo->jogador.pontuacaoTotal = 0;
     jogo->estado = MENU;
@@ -16,7 +17,6 @@ void Inicializar(Jogo *jogo) {
     jogo->seletorMenu = 0;
     jogo->modoDebug = false;
     lePlacar(jogo);
-    carregarTexturas(jogo);
     carregaMapa(jogo);
     inicializarMonstrons(jogo);
     inicializarJogador(jogo);
@@ -38,6 +38,8 @@ void inicializarJogador(Jogo *jogo) {
 }
 
 void carregarTexturas(Jogo* jogo) {
+    jogo->menuTex.fundoinical = LoadTexture(".recursos/menu/fundoinicial.png");
+
     jogo->jogador.tex.sul = LoadTexture(".recursos/jogador/jogador_baixo.png");
     jogo->jogador.tex.norte = LoadTexture(".recursos/jogador/jogador_cima.png");
     jogo->jogador.tex.leste = LoadTexture(".recursos/jogador/jogador_direita.png");

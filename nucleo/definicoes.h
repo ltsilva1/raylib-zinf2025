@@ -39,6 +39,10 @@ typedef struct {
     Texture2D oeste;
 } Texturas;
 
+typedef struct {
+    Texture2D fundoinical;
+} TexturasMenu;
+
 typedef enum {
     CIMA,
     BAIXO,
@@ -101,6 +105,7 @@ typedef struct {
     int nivelAtual;
     Texture2D vidaTex;
     Texture2D espadaTex;
+    TexturasMenu menuTex;
     bool modoDebug;
     // { CAMPOS PARA INPUT DE NOME }
     char nomeBuffer[MAX_NOME_JOGADOR + 1]; // Buffer para guardar o nome (+1 para o '\0')

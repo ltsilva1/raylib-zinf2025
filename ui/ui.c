@@ -12,18 +12,17 @@
 
 void DesenhaMenuPrincipal(Jogo* jogo) {
         ClearBackground(BLACK);
-        // Título do Jogo
-        const char* titulo = "Morde & Assopra"; //TROCAR PRA NÃO FICAR DESCARADO!!!!!!
-        int larguraTitulo = MeasureText(titulo, 60); // Mede a largura do texto para centralizar
-        DrawText(titulo, 1200 / 2 - larguraTitulo / 2, 800 / 6 - 30, 60, YELLOW);
+
+        DrawTexture(jogo->menuTex.fundoinical, 0, 0, WHITE);
 
         // Opções do Menu
-        // Você pode definir um array de strings para as opções para facilitar
         const char* opcoesTexto[3] = {
             "Novo Jogo",
             "Scoreboard",
             "Sair"
         };
+
+    DrawRectangle(40, 560, 320, 180, Fade(BLACK, 0.6f)); // Fundo para as opções
 
         int tamanhoFonteOpcao = 30;
         int espacamentoOpcao = 45; // Espaço vertical entre as opções
@@ -37,12 +36,12 @@ void DesenhaMenuPrincipal(Jogo* jogo) {
             // Desenha uma seta simples ou marcador para a opção selecionada (opcional)
             if (i == jogo->seletorMenu) {
                 DrawText(">", 60,
-                         800 / 2 + i * espacamentoOpcao - (tamanhoFonteOpcao/2), tamanhoFonteOpcao, GOLD);
+                         600 + i * espacamentoOpcao - (tamanhoFonteOpcao/2), tamanhoFonteOpcao, GOLD);
             }
 
             DrawText(opcoesTexto[i],
                      100,
-                     800 / 2 + i * espacamentoOpcao - (tamanhoFonteOpcao/2), // Ajusta para centralizar verticalmente
+                     600 + i * espacamentoOpcao - (tamanhoFonteOpcao/2), // Ajusta para centralizar verticalmente
                      tamanhoFonteOpcao,
                      cor);
         }
@@ -50,7 +49,7 @@ void DesenhaMenuPrincipal(Jogo* jogo) {
         // Instrução
         DrawText("Use as SETAS e ENTER para selecionar",
                  1200 / 2 - MeasureText("Use as SETAS e ENTER para selecionar", 20) / 2,
-                 800 - 60, 20, LIGHTGRAY);
+                 770, 20, LIGHTGRAY);
 
         if (jogo->modoDebug == true)
             TesteMapaDebug(jogo);
