@@ -54,6 +54,14 @@ typedef struct {
     Texture2D movTexOeste;
 } Animacoes;
 
+typedef struct {
+    Texture2D ataqueTexNorte;
+    Texture2D ataqueTexSul;
+    Texture2D ataqueTexLeste;
+    Texture2D ataqueTexOeste;
+
+} TexturasEspada;
+
 typedef enum {
     CIMA,
     BAIXO,
@@ -72,6 +80,8 @@ typedef struct {
     int pontuacaoTotal;
     int temEspada; // bool
     int contatoMonstro; // bool
+
+    TexturasEspada texEsp;
     float instantesInvencibilidade;
     float instantesEspada;
     PosicaoGrade tilesAtaque[3];

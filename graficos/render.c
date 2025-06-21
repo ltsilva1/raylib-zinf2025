@@ -106,7 +106,7 @@ switch (jogo->jogador.dir) {
 
 // Em render.c
 void desenhaJogador(Jogo* jogo) {
-    // 1. Lógica de invencibilidade (permanece igual)
+    // Pisca quando invencível
     if (jogo->jogador.instantesInvencibilidade > 0) {
         if (fmodf(GetTime(), 0.2f) < 0.1f) {
             return;
@@ -118,9 +118,9 @@ void desenhaJogador(Jogo* jogo) {
     float offsetX = 0.0f;
     float offsetY = 0.0f;
 
-    // 2. Decide qual textura, source e OFFSET usar
+    // Decide qual textura, "source" e offset usar
     if (jogo->jogador.estaSeMovendo) {
-        // --- CASO 1: JOGADOR ANDANDO ---
+        // Caso o jogador esteja no meio do movimento
 
         switch (jogo->jogador.dir) {
             case CIMA:    texturaParaUsar = jogo->jogador.animtex.movTexNorte; break;
@@ -132,20 +132,19 @@ void desenhaJogador(Jogo* jogo) {
 
         const int LARGURA_SPRITE_ANDANDO = 32;
         const int ALTURA_SPRITE_ANDANDO = 42;
-        const int ESPACAMENTO = 1;
+        const int ESPACAMENTO = 1; // Cada sprite de animação tem espaço de 1 pixel
 
         sourceRec.x = (float)jogo->jogador.frameAtual * (LARGURA_SPRITE_ANDANDO + ESPACAMENTO);
         sourceRec.y = 0;
         sourceRec.width = (float)LARGURA_SPRITE_ANDANDO;
         sourceRec.height = (float)ALTURA_SPRITE_ANDANDO;
 
-        // Define o offset para o sprite de 32x42
-        offsetX = (CASA - LARGURA_SPRITE_ANDANDO) / 2.0f; // = 9
-        offsetY = (CASA - ALTURA_SPRITE_ANDANDO) / 2.0f; // = 4
+        // Define o offset para o sprite de 32x42 ( Spritesheet de animação tem 230x48 )
+        offsetX = (CASA - LARGURA_SPRITE_ANDANDO) / 2.0f;
+        offsetY = (CASA - ALTURA_SPRITE_ANDANDO) / 2.0f;
 
     } else {
-        // --- CASO 2: JOGADOR PARADO ---
-
+        // Caso o jogador esteja parado:
         switch (jogo->jogador.dir) {
             case CIMA:    texturaParaUsar = jogo->jogador.tex.norte; break;
             case BAIXO:   texturaParaUsar = jogo->jogador.tex.sul;   break;
@@ -156,14 +155,12 @@ void desenhaJogador(Jogo* jogo) {
 
         sourceRec = (Rectangle){ 0.0f, 0.0f, (float)texturaParaUsar.width, (float)texturaParaUsar.height };
 
-        // CORREÇÃO: Define o offset para o sprite parado (48x48)
+        // Define o offset para o sprite parado (48x48)
         offsetX = (CASA - 48) / 2.0f; // = 1
         offsetY = (CASA - 48) / 2.0f; // = 1
     }
 
-    if (texturaParaUsar.id == 0) return;
-
-    // 3. Lógica de cálculo da POSIÇÃO DA CASA (permanece igual)
+    // Lógica de cálculo da posição da casa
     Vector2 posicaoVisualEmPixels;
     if (jogo->jogador.estaSeMovendo) {
         Vector2 posOrigemPx = { (float)jogo->jogador.posOrigem.x * CASA, (float)jogo->jogador.posOrigem.y * CASA };
@@ -176,12 +173,11 @@ void desenhaJogador(Jogo* jogo) {
         posicaoVisualEmPixels.y = (float)jogo->jogador.pos.y * CASA;
     }
 
-    // --- 4. APLICA OS OFFSETS CORRETOS (A GRANDE MUDANÇA) ---
-    // Adiciona os offsets dinâmicos que acabamos de calcular, mais o da HUD
+    // Adiciona os offsets corretos mais o da HUD
     posicaoVisualEmPixels.x += offsetX;
     posicaoVisualEmPixels.y += offsetY + ALTURA_HUD;
 
-    // 5. Desenha a textura
+    // Desenha a textura
     DrawTextureRec(texturaParaUsar, sourceRec, posicaoVisualEmPixels, WHITE);
 }
 
@@ -189,8 +185,29 @@ void desenhaEspada(Jogo* jogo) {
     if (jogo->mapa.espadaPegada == 0)
         DrawTexture(jogo->espadaTex, jogo->mapa.posInicialEspada.x * CASA,
                   jogo->mapa.posInicialEspada.y * CASA + ALTURA_HUD, WHITE);
-    for (int k = 0; k < 3; ++k)
-        DrawRectangle(jogo->jogador.tilesAtaque[k].x * CASA, jogo->jogador.tilesAtaque[k].y * CASA + ALTURA_HUD, CASA, CASA, YELLOW);
+    if (jogo->jogador.instantesEspada > 0) {
+
+        Texture2D texturaAtaqueParaUsar;
+
+        // Escolhe qual dos 4 sprites de ataque usar com base na direção do jogador
+        switch (jogo->jogador.dir) {
+            case CIMA:    texturaAtaqueParaUsar = jogo->jogador.texEsp.ataqueTexNorte;  break;
+            case BAIXO:   texturaAtaqueParaUsar = jogo->jogador.texEsp.ataqueTexSul;    break;
+            case ESQUERDA:texturaAtaqueParaUsar = jogo->jogador.texEsp.ataqueTexOeste;  break;
+            case DIREITA: texturaAtaqueParaUsar = jogo->jogador.texEsp.ataqueTexLeste;  break;
+            default:      texturaAtaqueParaUsar = jogo->jogador.texEsp.ataqueTexSul;
+        }
+
+        for (int k = 0; k < 3; ++k) {
+                // Calcula a posição em pixels para cada tile de ataque
+                int posX = jogo->jogador.tilesAtaque[k].x * CASA;
+                int posY = jogo->jogador.tilesAtaque[k].y * CASA + ALTURA_HUD;
+
+                // Desenha o sprite do ataque na posição calculada
+                // Dica: Use Fade(WHITE, 0.7f) para um efeito semi-transparente!
+                DrawTexture(texturaAtaqueParaUsar, posX, posY, WHITE);
+        }
+    }
 }
 
 void desenhaVida(Jogo* jogo) {

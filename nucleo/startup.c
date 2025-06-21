@@ -62,6 +62,11 @@ void carregarTexturas(Jogo* jogo) {
     jogo->jogador.animtex.movTexLeste = LoadTexture(".recursos/jogador/animacoes/andando_direita.png");
     jogo->jogador.animtex.movTexOeste = LoadTexture(".recursos/jogador/animacoes/andando_esquerda.png");
 
+    jogo->jogador.texEsp.ataqueTexNorte = LoadTexture(".recursos/ataque/ataque_cima.png");
+    jogo->jogador.texEsp.ataqueTexSul = LoadTexture(".recursos/ataque/ataque_baixo.png");
+    jogo->jogador.texEsp.ataqueTexLeste = LoadTexture(".recursos/ataque/ataque_direita.png");
+    jogo->jogador.texEsp.ataqueTexOeste = LoadTexture(".recursos/ataque/ataque_esquerda.png");
+
     jogo->mapa.tex.sul = LoadTexture(".recursos/paredes/parede.png");
 
     jogo->mapa.chao[0] = LoadTexture(".recursos/chao/chao_placeholder.png");
