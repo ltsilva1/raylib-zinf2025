@@ -16,33 +16,27 @@ void processarEntrada(Jogo *jogo) {
             jogo->modoDebug = true;
         } else {jogo->modoDebug = false;}
     }
-    float deltaTime = 0.0f;
-    deltaTime = GetFrameTime();
+    float deltaTime = GetFrameTime();
     const float intervaloMovimento = 0.12f;
 
     switch (jogo->estado) {
         case JOGANDO:
-            jogo->jogador.tempoParaJogadorMover -= deltaTime;
-            if (jogo->jogador.tempoParaJogadorMover <= 0.0f) {
+            if (jogo->jogador.estaSeMovendo == false) {
                 if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
                     moveJogador(&jogo->jogador, &jogo->mapa, -1, 0);
                     jogo->jogador.dir = ESQUERDA;
-                    jogo->jogador.tempoParaJogadorMover = intervaloMovimento;
                 }
                 if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
                     moveJogador(&jogo->jogador, &jogo->mapa, 1, 0);
                     jogo->jogador.dir = DIREITA;
-                    jogo->jogador.tempoParaJogadorMover = intervaloMovimento;
                 }
                 if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) {
                     moveJogador(&jogo->jogador, &jogo->mapa, 0, -1);
                     jogo->jogador.dir = CIMA;
-                    jogo->jogador.tempoParaJogadorMover = intervaloMovimento;
                 }
                 if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) {
                     moveJogador(&jogo->jogador, &jogo->mapa, 0, 1);
                     jogo->jogador.dir = BAIXO;
-                    jogo->jogador.tempoParaJogadorMover = intervaloMovimento;
                 }
             }
                 if (IsKeyPressed(KEY_J))

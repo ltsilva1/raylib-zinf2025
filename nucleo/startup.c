@@ -23,10 +23,13 @@ void Inicializar(Jogo *jogo) {
 
 }
 void inicializarJogador(Jogo *jogo) {
+    // Status básicos
     jogo->jogador.vidas = 3;
     jogo->jogador.dir = BAIXO;
     jogo->jogador.pos.x = jogo->mapa.posInicialJogador.x;
     jogo->jogador.pos.y = jogo->mapa.posInicialJogador.y;
+
+    // Status de combate
     for (int i = 0; i < 3; ++i) {
         jogo->jogador.tilesAtaque[i].x = -1;
         jogo->jogador.tilesAtaque[i].y = -1;
@@ -34,7 +37,16 @@ void inicializarJogador(Jogo *jogo) {
     jogo->jogador.temEspada = 0;
     jogo->jogador.instantesEspada = 0;
     jogo->jogador.instantesInvencibilidade = 0;
-    jogo->jogador.tempoParaJogadorMover = 0.0f;
+
+
+    // --- STATUS DA ANIMAÇÃO DE MOVIMENTO ---
+    jogo->jogador.estaSeMovendo = false; // ou 0
+    jogo->jogador.progressoMovimento = 0.0f;
+    // Define origem e destino para a posição inicial para evitar dados lixo
+    jogo->jogador.posOrigem = jogo->jogador.pos;
+    jogo->jogador.posDestino = jogo->jogador.pos;
+    jogo->jogador.frameAtual = 0;
+
 }
 
 void carregarTexturas(Jogo* jogo) {
@@ -44,6 +56,11 @@ void carregarTexturas(Jogo* jogo) {
     jogo->jogador.tex.norte = LoadTexture(".recursos/jogador/jogador_cima.png");
     jogo->jogador.tex.leste = LoadTexture(".recursos/jogador/jogador_direita.png");
     jogo->jogador.tex.oeste = LoadTexture(".recursos/jogador/jogador_esquerda.png");
+
+    jogo->jogador.animtex.movTexNorte = LoadTexture(".recursos/jogador/animacoes/andando_cima.png");
+    jogo->jogador.animtex.movTexSul = LoadTexture(".recursos/jogador/animacoes/andando_baixo.png");
+    jogo->jogador.animtex.movTexLeste = LoadTexture(".recursos/jogador/animacoes/andando_direita.png");
+    jogo->jogador.animtex.movTexOeste = LoadTexture(".recursos/jogador/animacoes/andando_esquerda.png");
 
     jogo->mapa.tex.sul = LoadTexture(".recursos/paredes/parede.png");
 

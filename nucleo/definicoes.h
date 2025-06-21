@@ -6,6 +6,10 @@
 #define CASA 50
 #define ALTURA_HUD 60
 #define MAX_NOME_JOGADOR 20
+#define DURACAO_MOVIMENTO 0.12f // Duração em segundos para mover uma casa. (Ajustar)
+#define JOGADOR_NUM_FRAMES 7       // 7 frames de animação por direção
+#define JOGADOR_TEMPO_POR_FRAME 0.1f //Animação troca de frame a cada 0.1 segundos
+
 #include "raylib.h"
 #include <stdbool.h>
 
@@ -43,6 +47,13 @@ typedef struct {
     Texture2D fundoinical;
 } TexturasMenu;
 
+typedef struct {
+    Texture2D movTexNorte;
+    Texture2D movTexSul;
+    Texture2D movTexLeste;
+    Texture2D movTexOeste;
+} Animacoes;
+
 typedef enum {
     CIMA,
     BAIXO,
@@ -56,6 +67,7 @@ typedef struct {
     PosicaoGrade pos;
     Orientacao dir;
     Texturas tex;
+    Animacoes animtex;
     int vidas;
     int pontuacaoTotal;
     int temEspada; // bool
@@ -63,11 +75,12 @@ typedef struct {
     float instantesInvencibilidade;
     float instantesEspada;
     PosicaoGrade tilesAtaque[3];
-    float tempoParaJogadorMover; //????????????????? OQ CARALHOS É ISSO GABRIEL
-    //bool estaSeMovendo; // 0 para parado, 1 para se movendo
-    //PosicaoGrade posOrigem; // De qual casa o movimento começou
-    //PosicaoGrade posDestino; // Para qual casa o movimento vai
-    //float progressoMovimento; // Um timer que vai de 0.0 até a duração do movimento
+
+    bool estaSeMovendo; // 0 para parado, 1 para se movendo
+    PosicaoGrade posOrigem; // De qual casa o movimento começou
+    PosicaoGrade posDestino; // Para qual casa o movimento vai
+    float progressoMovimento; // Um timer que vai de 0.0 até a duração do movimento
+    int frameAtual;
 } Jogador;
 
 typedef struct {
