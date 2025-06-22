@@ -18,7 +18,7 @@ void Inicializar(Jogo *jogo) {
     jogo->modoDebug = false;
     lePlacar(jogo);
     carregaMapa(jogo);
-    inicializarMonstrons(jogo);
+    inicializarMonstros(jogo);
     inicializarJogador(jogo);
 
 }
@@ -40,8 +40,9 @@ void inicializarJogador(Jogo *jogo) {
 
 
     // Status da animação de movimento do jogador
-    jogo->jogador.estaSeMovendo = false; // ou 0
+    jogo->jogador.estaSeMovendo = false;
     jogo->jogador.progressoMovimento = 0.0f;
+    jogo->jogador.ultimoEixoMovido = 0;
 
     // Define origem e destino para a posição inicial para evitar dados lixo
     jogo->jogador.posOrigem = jogo->jogador.pos;
@@ -64,34 +65,31 @@ void carregarTexturas(Jogo* jogo) {
     jogo->jogador.animtex.movTexLeste = LoadTexture(".recursos/jogador/animacoes/andando_direita.png");
     jogo->jogador.animtex.movTexOeste = LoadTexture(".recursos/jogador/animacoes/andando_esquerda.png");
 
-    jogo->jogador.texEsp.ataqueTexNorte = LoadTexture(".recursos/ataque/ataque_cima.png");
-    jogo->jogador.texEsp.ataqueTexSul = LoadTexture(".recursos/ataque/ataque_baixo.png");
-    jogo->jogador.texEsp.ataqueTexLeste = LoadTexture(".recursos/ataque/ataque_direita.png");
-    jogo->jogador.texEsp.ataqueTexOeste = LoadTexture(".recursos/ataque/ataque_esquerda.png");
-    jogo->jogador.texEspX.cabo = LoadTexture(".recursos/ataque/espada_cabo.png");
-    jogo->jogador.texEspX.meio = LoadTexture(".recursos/ataque/espada_meio.png");
-    jogo->jogador.texEspX.ponta = LoadTexture(".recursos/ataque/espada_ponta.png");
+    jogo->jogador.texEsp.cabo = LoadTexture(".recursos/ataque/espada_cabo.png");
+    jogo->jogador.texEsp.meio = LoadTexture(".recursos/ataque/espada_meio.png");
+    jogo->jogador.texEsp.ponta = LoadTexture(".recursos/ataque/espada_ponta.png");
 
     jogo->mapa.texparede.var0 = LoadTexture(".recursos/paredes/arbustoparede.png");
     jogo->mapa.texparede.var1 = LoadTexture(".recursos/paredes/arbustoparede_deserto.png");
 
-    jogo->mapa.chao[0] = LoadTexture(".recursos/chao/chao_placeholder.png");
+    jogo->mapa.chao[0] = LoadTexture(".recursos/chao/chao_commato.png");
     jogo->mapa.chao[1] = LoadTexture(".recursos/chao/chao_semmato.png");
 
-    jogo->vidaTex = LoadTexture(".recursos/items/vida.png");
-    jogo->espadaTex = LoadTexture(".recursos/items/espada.png");
+    jogo->monstrosTex.norte = LoadTexture(".recursos/inimigos/inimigo_cima.png");
+    jogo->monstrosTex.sul = LoadTexture(".recursos/inimigos/inimigo_baixo.png");
+    jogo->monstrosTex.oeste = LoadTexture(".recursos/inimigos/inimigo_direita.png");
+    jogo->monstrosTex.leste = LoadTexture(".recursos/inimigos/inimigo_esquerda.png");
+
+    jogo->itemTex.vidaTex = LoadTexture(".recursos/items/vida.png");
+    jogo->itemTex.espadaTex = LoadTexture(".recursos/items/espada.png");
 
 }
 
-void inicializarMonstrons(Jogo* jogo) {
+void inicializarMonstros(Jogo* jogo) {
     for (int i = 0; i < jogo->mapa.numMonstrosInicial; ++i) {
         jogo->mapa.monstro[i].pontuacao = rand() % 100 + 1;
         jogo->mapa.monstro[i].vivo = 1;
         jogo->mapa.monstro[i].dir = (rand() % 4);
-        jogo->mapa.monstro[i].tex.norte = LoadTexture(".recursos/inimigos/inimigo_cima.png");
-        jogo->mapa.monstro[i].tex.sul = LoadTexture(".recursos/inimigos/inimigo_baixo.png");
-        jogo->mapa.monstro[i].tex.oeste = LoadTexture(".recursos/inimigos/inimigo_direita.png");
-        jogo->mapa.monstro[i].tex.leste = LoadTexture(".recursos/inimigos/inimigo_esquerda.png");
 
         // Garante que o monstro não está no meio de uma sequência de passos quando começa
         jogo->mapa.monstro[i].passosRestantes = 0;

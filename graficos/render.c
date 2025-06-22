@@ -12,6 +12,7 @@
 
 
 void desenhaJogo(Jogo* meuJogo) {
+    BeginDrawing();
     switch (meuJogo->estado) {
         case JOGANDO:
             ClearBackground(RAYWHITE);
@@ -42,6 +43,7 @@ void desenhaJogo(Jogo* meuJogo) {
             break;
 
     }
+    EndDrawing();
 }
 
 void desenhaCenario(Jogo* jogo) {
@@ -75,16 +77,16 @@ void desenhaMonstro(Jogo* jogo) {
 
             switch (jogo->mapa.monstro[i].dir) { // As texturas tão sendo carregadas toda hora, precisa mudar isso aqui
                 case CIMA:
-                    texturaAtual = jogo->mapa.monstro[i].tex.norte; // endereço textura pra cima;
+                    texturaAtual = jogo->monstrosTex.norte; // endereço textura pra cima;
                     break;
                 case BAIXO:
-                    texturaAtual = jogo->mapa.monstro[i].tex.sul;
+                    texturaAtual = jogo->monstrosTex.sul;
                     break;;
                 case ESQUERDA:
-                    texturaAtual = jogo->mapa.monstro[i].tex.leste;
+                    texturaAtual = jogo->monstrosTex.leste;
                     break;
                 case DIREITA:
-                    texturaAtual = jogo->mapa.monstro[i].tex.oeste;
+                    texturaAtual = jogo->monstrosTex.oeste;
                     break;
             }
             DrawTextureV(texturaAtual, posicaoMonstro, WHITE);
@@ -172,7 +174,7 @@ void desenhaJogador(Jogo* jogo) {
 
 void desenhaEspada(Jogo* jogo) {
     if (jogo->mapa.espadaPegada == 0)
-        DrawTexture(jogo->espadaTex, jogo->mapa.posInicialEspada.x * CASA,
+        DrawTexture(jogo->itemTex.espadaTex, jogo->mapa.posInicialEspada.x * CASA,
                   jogo->mapa.posInicialEspada.y * CASA + ALTURA_HUD, WHITE);
 
     if (jogo->jogador.instantesEspada > 0) {
@@ -182,9 +184,9 @@ void desenhaEspada(Jogo* jogo) {
             Texture2D texturaParteAtual;
 
             switch (k) {
-                case 0: texturaParteAtual = jogo->jogador.texEspX.cabo; break;
-                case 1: texturaParteAtual = jogo->jogador.texEspX.meio; break;
-                case 2: texturaParteAtual = jogo->jogador.texEspX.ponta; break;
+                case 0: texturaParteAtual = jogo->jogador.texEsp.cabo; break;
+                case 1: texturaParteAtual = jogo->jogador.texEsp.meio; break;
+                case 2: texturaParteAtual = jogo->jogador.texEsp.ponta; break;
                 default: continue;
             }
 
@@ -229,7 +231,7 @@ void desenhaEspada(Jogo* jogo) {
 void desenhaVida(Jogo* jogo) {
     for (int i = 0; i < jogo->mapa.numVidasExtras; ++i)
         if (jogo->mapa.vidasPegadas[i] == 0)
-            DrawTexture(jogo->vidaTex, jogo->mapa.vidasExtras[i].x * CASA,
+            DrawTexture(jogo->itemTex.vidaTex, jogo->mapa.vidasExtras[i].x * CASA,
                 jogo->mapa.vidasExtras[i].y * CASA + ALTURA_HUD, WHITE);
 
 }

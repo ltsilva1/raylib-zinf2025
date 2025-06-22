@@ -8,7 +8,7 @@
 
 void Inicializar(Jogo *jogo);
 void inicializarJogador(Jogo *jogo);
-void inicializarMonstrons(Jogo* jogo);
+void inicializarMonstros(Jogo* jogo);
 void carregarTexturas(Jogo* jogo);
 void inicializarMapa(Jogo* jogo);
 

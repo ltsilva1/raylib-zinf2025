@@ -14,22 +14,22 @@ int main() {
 	InitWindow(LARGURA, ALTURA, "Morde & Assopra"); //Inicializa janela, com certo tamanho e titulo
 	SetTargetFPS(60);// Ajusta a janela para 60 frames por segundo
 
+	/* Inicializa a nossa estrutura principal, carregando o mapa, texturas
+	 * e as outras estruturas auxiliares (jogador, monstros, etc.) */
 	Inicializar(&zinf);
 
-	//Este laco repete enquanto a janela nao for fechada
-	//Utilizamos ele para atualizar o estado do programa / jogo
-		while (!WindowShouldClose()) {
-			BeginDrawing(); //Inicia o ambiente de desenho na tela
+	/* O LOOP PRINCIPAL: Enquanto a janela estiver aberta, todas as operações do programa são executadas sequencialmente
+	 * pelas três funções principais que gerenciam entrada, processamento e renderização, nessa ordem. */
+	while (!WindowShouldClose()) {
 
-			processarEntrada(&zinf);
+		processarEntrada(&zinf); // Comandos de entrada
 
-			processarLogica(&zinf);
+		processarLogica(&zinf); // Processamento lógico
 
-			desenhaJogo(&zinf);
+		desenhaJogo(&zinf); // Gráficos (raylib)
 
-			EndDrawing(); //Finaliza o ambiente de desenho na tela
-		}
+	}
 
-		CloseWindow(); // Fecha a janela
-		return 0;
+	CloseWindow(); // Fecha a janela
+	return 0;
 	}

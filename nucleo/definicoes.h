@@ -41,6 +41,7 @@ typedef struct {
     Texture2D sul;
     Texture2D leste;
     Texture2D oeste;
+
 } TexturasOri;
 
 typedef struct {
@@ -51,6 +52,12 @@ typedef struct {
 } TexturaAtaquePartes;
 
 typedef struct {
+    Texture2D vidaTex;
+    Texture2D espadaTex;
+
+} TexturasItens;
+
+typedef struct {
     Texture2D var0;
     Texture2D var1;
 
@@ -59,6 +66,7 @@ typedef struct {
 typedef struct {
     Texture2D fundoinical;
     Texture2D fundobasico;
+
 } TexturasMenu;
 
 typedef struct {
@@ -67,14 +75,6 @@ typedef struct {
     Texture2D movTexLeste;
     Texture2D movTexOeste;
 } Animacoes;
-
-typedef struct {
-    Texture2D ataqueTexNorte;
-    Texture2D ataqueTexSul;
-    Texture2D ataqueTexLeste;
-    Texture2D ataqueTexOeste;
-
-} TexturasEspada;
 
 typedef enum {
     CIMA,
@@ -92,11 +92,10 @@ typedef struct {
     Animacoes animtex;
     int vidas;
     int pontuacaoTotal;
-    int temEspada; // bool
-    int contatoMonstro; // bool
+    bool temEspada;
+    bool contatoMonstro; // Acho que não foi usado
 
-    TexturasEspada texEsp;
-    TexturaAtaquePartes texEspX;
+    TexturaAtaquePartes texEsp;
     float instantesInvencibilidade;
     float instantesEspada;
     PosicaoGrade tilesAtaque[3];
@@ -104,6 +103,7 @@ typedef struct {
     bool estaSeMovendo; // 0 para parado, 1 para se movendo
     PosicaoGrade posOrigem; // De qual casa o movimento começou
     PosicaoGrade posDestino; // Para qual casa o movimento vai
+    int ultimoEixoMovido; // 0 para horizontal (X), 1 para vertical (Y) (Utilizado no buffer de movimentação)
     float progressoMovimento; // Um timer que vai de 0.0 até a duração do movimento
     int frameAtual;
 } Jogador;
@@ -111,7 +111,6 @@ typedef struct {
 typedef struct {
     PosicaoGrade pos;
     Orientacao dir;
-    TexturasOri tex;
     int pontuacao;
     int vivo; // bool
     int passosRestantes;
@@ -141,10 +140,10 @@ typedef struct {
     Score score[5];
     int seletorMenu;
     Jogador jogador;
+    TexturasOri monstrosTex;
     Mapa mapa;
     int nivelAtual;
-    Texture2D vidaTex;
-    Texture2D espadaTex;
+    TexturasItens itemTex;
     TexturasMenu menuTex;
     bool modoDebug;
     // { CAMPOS PARA INPUT DE NOME }

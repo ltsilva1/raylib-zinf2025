@@ -13,10 +13,6 @@ int carregaMapa (Jogo* meuJogo) {
         return 0;
     }
 
-    //for (int i = 0; i < 16; i++) {
-     //   fgets(meuJogo->mapa.mapa[i], 26, f);  // lê até 24 caracteres + '\n' + '\0'
-    //}
-
     for (int i = 0; i < 16; i++) { // Loop para as 16 linhas
         for (int j = 0; j < 24; j++) { // Loop para as 24 colunas
             char caractereConsumido;
@@ -46,8 +42,8 @@ int carregaMapa (Jogo* meuJogo) {
 
     for (int i = 0; i < 16; i++) {
         for (int j = 0; j < 24; j++) {
-            meuJogo->mapa.chaoVariacao[i][j] = rand() % 2; // Salva 0 ou 1
-            meuJogo->mapa.paredeVariacao[i][j] = rand() % 2; // Salva 0, 1 ou 2
+            meuJogo->mapa.chaoVariacao[i][j] = rand() % 2; // Salva 0 ou 1 (chão com ou sem mato)
+            meuJogo->mapa.paredeVariacao[i][j] = rand() % 2; // Salva 0 ou 1 (parede com arbusto verde ou amarelo)
         }
     }
 

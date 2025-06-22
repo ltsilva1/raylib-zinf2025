@@ -8,29 +8,37 @@
 
 void ataqueEspada(Jogo* jogo) {
     if (jogo->jogador.instantesEspada > 0 && jogo->jogador.temEspada == true) {
+
+        // Define uma posição base para o ataque. Por padrão, é a posição lógica atual do jogador.
+        PosicaoGrade baseDoAtaque = jogo->jogador.pos;
+
+        // Se o jogador estiver no meio de uma animação de movimento, a base passa a ser a casa de destino do movimento
+        if (jogo->jogador.estaSeMovendo)
+            baseDoAtaque = jogo->jogador.posDestino;
+
         switch (jogo->jogador.dir) {
             case CIMA:
                 for (int i = 0; i < 3; ++i) {
-                    jogo->jogador.tilesAtaque[i].y = jogo->jogador.pos.y - 1 - i;
+                    jogo->jogador.tilesAtaque[i].y = baseDoAtaque.y - 1 - i;
                     jogo->jogador.tilesAtaque[i].x = jogo->jogador.pos.x;
                 }
                 break;
             case BAIXO:
                 for (int i = 0; i < 3; ++i) {
-                    jogo->jogador.tilesAtaque[i].y = jogo->jogador.pos.y + 1 + i;
-                    jogo->jogador.tilesAtaque[i].x = jogo->jogador.pos.x;
+                    jogo->jogador.tilesAtaque[i].y = baseDoAtaque.y + 1 + i;
+                    jogo->jogador.tilesAtaque[i].x = baseDoAtaque.x;
                 }
                 break;
             case ESQUERDA:
                 for (int i = 0; i < 3; ++i) {
-                    jogo->jogador.tilesAtaque[i].y = jogo->jogador.pos.y;
-                    jogo->jogador.tilesAtaque[i].x = jogo->jogador.pos.x  - 1 - i;
+                    jogo->jogador.tilesAtaque[i].y = baseDoAtaque.y;
+                    jogo->jogador.tilesAtaque[i].x = baseDoAtaque.x  - 1 - i;
                 }
                 break;
             case DIREITA:
                 for (int i = 0; i < 3; ++i) {
-                    jogo->jogador.tilesAtaque[i].y = jogo->jogador.pos.y;
-                    jogo->jogador.tilesAtaque[i].x = jogo->jogador.pos.x  + 1 + i;
+                    jogo->jogador.tilesAtaque[i].y = baseDoAtaque.y;
+                    jogo->jogador.tilesAtaque[i].x = baseDoAtaque.x  + 1 + i;
                 }
                 break;
         }

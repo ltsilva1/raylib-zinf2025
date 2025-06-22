@@ -21,6 +21,6 @@ void avancaNivel(Jogo* jogo) {
                         jogo->estado = VITORIA; // Se não for recorde, vai para a tela de vitória normal
                 }
         }
-        inicializarMonstrons(jogo);
+        inicializarMonstros(jogo);
         inicializarJogador(jogo);
 }
