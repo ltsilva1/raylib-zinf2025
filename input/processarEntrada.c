@@ -16,33 +16,31 @@ void processarEntrada(Jogo *jogo) {
             jogo->modoDebug = true;
         } else {jogo->modoDebug = false;}
     }
-    float deltaTime = GetFrameTime();
-    const float intervaloMovimento = 0.12f;
 
     switch (jogo->estado) {
         case JOGANDO:
-            if (jogo->jogador.estaSeMovendo == false) {
-                if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
-                    moveJogador(&jogo->jogador, &jogo->mapa, -1, 0);
-                    jogo->jogador.dir = ESQUERDA;
-                }
-                if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
-                    moveJogador(&jogo->jogador, &jogo->mapa, 1, 0);
-                    jogo->jogador.dir = DIREITA;
-                }
-                if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) {
-                    moveJogador(&jogo->jogador, &jogo->mapa, 0, -1);
-                    jogo->jogador.dir = CIMA;
-                }
-                if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) {
-                    moveJogador(&jogo->jogador, &jogo->mapa, 0, 1);
-                    jogo->jogador.dir = BAIXO;
-                }
+            Vector2 movimentoDesejado = { 0.0f, 0.0f }; // Vetor para o buffer de inputs
+
+            // Acumula os inputs no vetor
+            if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) movimentoDesejado.x += 1.0f;
+            if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A))  movimentoDesejado.x -= 1.0f;
+            if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S))  movimentoDesejado.y += 1.0f;
+            if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W))    movimentoDesejado.y -= 1.0f;
+
+            //  Decide qual movimento fazer, priorizando o movimento horizontal
+            if (movimentoDesejado.x != 0.0f) {
+                jogo->jogador.dir = (movimentoDesejado.x > 0) ? DIREITA : ESQUERDA;
+                moveJogador(&jogo->jogador, &jogo->mapa, (int)movimentoDesejado.x, 0);
             }
-                if (IsKeyPressed(KEY_J))
-                    if (jogo->jogador.temEspada == true)
-                        jogo->jogador.instantesEspada = 0.5f;
-                if (IsKeyPressed(KEY_ENTER)) {jogo->estado = PAUSADO;}
+            else if (movimentoDesejado.y != 0.0f) { // Só tenta mover na vertical se não houver input horizontal
+                jogo->jogador.dir = (movimentoDesejado.y > 0) ? BAIXO : CIMA;
+                moveJogador(&jogo->jogador, &jogo->mapa, 0, (int)movimentoDesejado.y);
+            }
+
+            if (IsKeyPressed(KEY_J))
+                if (jogo->jogador.temEspada == true)
+                    jogo->jogador.instantesEspada = 0.5f;
+            if (IsKeyPressed(KEY_ENTER)) {jogo->estado = PAUSADO;}
 
             break;
 
@@ -158,7 +156,7 @@ void processarEntrada(Jogo *jogo) {
 
         case VITORIA:
             if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S))
-                if (jogo->seletorMenu < 2)
+                if (jogo->seletorMenu < 1)
                     jogo->seletorMenu += 1;
             if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W))
                 if (jogo->seletorMenu > 0)
@@ -167,12 +165,10 @@ void processarEntrada(Jogo *jogo) {
             if (IsKeyPressed((KEY_ENTER))) {
                 switch (jogo->seletorMenu) {
                     case 0:
-                        jogo->estado = MENU;
-                        jogo->seletorMenu = 0;
+                        Inicializar(jogo);
+                        jogo->estado = JOGANDO;
                         break;
                     case 1:
-                        jogo->estado = MENU;
-                        jogo->seletorMenu = 0;
                         Inicializar(jogo);
                         break;
                 }

@@ -47,6 +47,7 @@ int carregaMapa (Jogo* meuJogo) {
     for (int i = 0; i < 16; i++) {
         for (int j = 0; j < 24; j++) {
             meuJogo->mapa.chaoVariacao[i][j] = rand() % 2; // Salva 0 ou 1
+            meuJogo->mapa.paredeVariacao[i][j] = rand() % 2; // Salva 0, 1 ou 2
         }
     }
 

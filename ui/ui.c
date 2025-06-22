@@ -50,9 +50,6 @@ void DesenhaMenuPrincipal(Jogo* jogo) {
         DrawText("Use as SETAS e ENTER para selecionar",
                  1200 / 2 - MeasureText("Use as SETAS e ENTER para selecionar", 20) / 2,
                  770, 20, LIGHTGRAY);
-
-        if (jogo->modoDebug == true)
-            TesteMapaDebug(jogo);
     }
 
 void desenhaHUD(Jogo* jogo) {
@@ -69,9 +66,17 @@ void desenhaHUD(Jogo* jogo) {
             char nivelAtual[20];
             sprintf(nivelAtual, "Nivel: %d", jogo->nivelAtual);
 
-            DrawText(vidas, 20, 15, 35, WHITE);
-            DrawText(pontos, 400, 15, 35, WHITE);
-            DrawText(nivelAtual, 800, 15, 35, WHITE);
+            int tamanhoFonte = 35;
+            // Coordenada Y que centraliza o texto verticalmente na HUD de 60px
+            int posY = (ALTURA_HUD - tamanhoFonte) / 2;
+
+            // PS.: (LARGURA / 3 / 2) é para encontrar o ponto central do primeiro terço
+            DrawText(vidas,(LARGURA / 3 / 2) - (MeasureText(vidas, tamanhoFonte) / 2), posY, tamanhoFonte, WHITE);
+
+            DrawText(pontos,(LARGURA / 2) - (MeasureText(pontos, tamanhoFonte) / 2),posY,tamanhoFonte,WHITE);
+
+            DrawText(nivelAtual,(LARGURA / 3 * 2) + (LARGURA / 3 / 2) - (MeasureText(nivelAtual, tamanhoFonte) / 2),posY,tamanhoFonte,WHITE);
+
             break;
 
         case true:
@@ -138,8 +143,14 @@ void DesenhaPause(Jogo* jogo) {
 }
 void DesenhaGameOver (Jogo* jogo) {
     ClearBackground(BLACK);
+
+    DrawTexture(jogo->menuTex.fundobasico, 0, 0, WHITE);
+
+    const char* titulo = "< Fim de Jogo >";
+    int larguraTitulo = MeasureText(titulo, 120); // Mede a largura do texto para centralizar
+    DrawText(titulo, 1200 / 2 - larguraTitulo / 2, 800 / 6 - 30, 120, YELLOW);
+
     // Opções do Menu
-    // Você pode definir um array de strings para as opções para facilitar
     const char* opcoesTexto[2] = {
         "Reiniciar Jogo",
         "Voltar ao Menu"
@@ -171,14 +182,16 @@ void DesenhaGameOver (Jogo* jogo) {
 
 void DesenhaVitoria(Jogo* jogo) {
     ClearBackground(BLACK);
+
+    DrawTexture(jogo->menuTex.fundobasico, 0, 0, WHITE);
+
     // Opções do Menu
-    // Você pode definir um array de strings para as opções para facilitar
     const char* opcoesTexto[2] = {
         "Reiniciar Jogo",
         "Voltar ao Menu"
     };
 
-    const char* titulo = "VITORIA!"; //TROCAR PRA NÃO FICAR DESCARADO!!!!!!
+    const char* titulo = "VITORIA!";
     int larguraTitulo = MeasureText(titulo, 120); // Mede a largura do texto para centralizar
     DrawText(titulo, 1200 / 2 - larguraTitulo / 2, 800 / 6 - 30, 120, YELLOW);
 
@@ -186,23 +199,35 @@ void DesenhaVitoria(Jogo* jogo) {
     int tamanhoFonteOpcao = 30;
     int espacamentoOpcao = 45; // Espaço vertical entre as opções
 
+    float posXPainel = (LARGURA - 500) / 2.0f;
+    float posYPainel = (ALTURA / 2.0f) - (200 / 2.0f) + 70;
+    float yInicialTexto = posYPainel + (200 - (2 * tamanhoFonteOpcao + espacamentoOpcao * (2 - 1))) / 2 + (tamanhoFonteOpcao/2);
+
+
+    // Desenha o retângulo preto com 70% de opacidade para um efeito suave
+    DrawRectangle(posXPainel, posYPainel + 20, 500, 150, Fade(BLACK, 0.6f));
+    // Desenha uma borda para o painel
+    DrawRectangleLines(posXPainel, posYPainel + 20, 500, 150, GRAY);
+
     for (int i = 0; i < 2; i++) {
         Color cor = WHITE;
         if (i == jogo->seletorMenu) {
             cor = GOLD; // Cor de destaque para a opção selecionada
         }
 
-        // Desenha uma seta simples ou marcador para a opção selecionada (opcional)
-        if (i == jogo->seletorMenu) {
-            DrawText(">", 500 - 40,
-                     800 / 2 + i * espacamentoOpcao - (tamanhoFonteOpcao/2), tamanhoFonteOpcao, GOLD);
-        }
+        float larguraTexto = MeasureText(opcoesTexto[i], tamanhoFonteOpcao);
+        // Calcula a posição X para que o CENTRO do texto se alinhe com o CENTRO da janela
+        float posXTexto = LARGURA / 2 - larguraTexto / 2;
 
-        DrawText(opcoesTexto[i],
-                 500,
-                 800 / 2 + i * espacamentoOpcao - (tamanhoFonteOpcao/2), // Ajusta para centralizar verticalmente
-                 tamanhoFonteOpcao,
-                 cor);
+        float posYTexto = yInicialTexto + (i * espacamentoOpcao);
+
+        // Desenha o texto da opção na posição centralizada
+        DrawText(opcoesTexto[i], posXTexto, posYTexto, tamanhoFonteOpcao, cor);
+
+        // Desenha a seta indicadora relativa à posição do texto
+        if (i == jogo->seletorMenu) {
+            DrawText(">", posXTexto - 40, posYTexto, tamanhoFonteOpcao, GOLD);
+        }
     }
 }
 
@@ -246,6 +271,20 @@ void DesenhaTelaEntradaNome(Jogo* jogo) {
 void DesenhaPlacar(Jogo* jogo) {
     ClearBackground(BLACK);
 
+    DrawTexture(jogo->menuTex.fundobasico, 0, 0, WHITE);
+
+    // Painel
+    float larguraPainel = 800; // Largura do painel
+    float alturaPainel = 750; // Altura do painel
+    float posXPainel = (LARGURA - larguraPainel) / 2.0f; // Centraliza na horizontal
+    float posYPainel = (ALTURA - alturaPainel) / 2.0f; // Centraliza na vertical
+
+    // Desenha o painel preto com 75% de opacidade para um efeito translúcido
+    DrawRectangleRec((Rectangle){posXPainel, posYPainel, larguraPainel, alturaPainel}, Fade(BLACK, 0.75f));
+
+    // Desenha uma borda para o painel
+    DrawRectangleLinesEx((Rectangle){posXPainel, posYPainel, larguraPainel, alturaPainel}, 2, DARKGRAY);
+
     const char* titulo = "Placar:"; //TROCAR PRA NÃO FICAR DESCARADO!!!!!!
     int larguraTitulo = MeasureText(titulo, 60); // Mede a largura do texto para centralizar
     DrawText(titulo, 1200 / 2 - larguraTitulo / 2, 800 / 6 - 30, 60, YELLOW);
@@ -276,43 +315,5 @@ void DesenhaPlacar(Jogo* jogo) {
              1200 / 2 - MeasureText("Use ENTER para voltar ao menu", 20) / 2,
              800 - 60, 20, LIGHTGRAY);
 
-}
-
-#include <stdio.h> // Para snprintf
-
-// Função de debug para desenhar a matriz do mapa como texto na tela
-void TesteMapaDebug(Jogo* jogo) {
-    int posXInicial = 50;  // Posição X inicial na tela para começar a desenhar
-    int posYInicial = 70;  // Posição Y inicial (abaixo da HUD)
-    int tamanhoFonte = 12; // Tamanho da fonte para os caracteres
-    int espacamentoX = 10; // Espaçamento horizontal entre os caracteres
-    int espacamentoY = 15; // Espaçamento vertical entre as linhas
-
-    // Título para o debug visual
-    DrawText("DEBUG: Matriz do Mapa Carregada", posXInicial, posYInicial - 20, 20, RED);
-
-    // 1. Loop para percorrer cada linha do mapa
-    for (int i = 0; i < 16; i++) {
-        // 2. Loop para percorrer cada coluna da linha atual
-        for (int j = 0; j < 24; j++) {
-            char c = jogo->mapa.mapa[i][j];
-            // Se o caractere for nulo, não desenha nada (fim da linha lida pelo fgets)
-            if (c == '\0') {
-                break;
-            }
-            // 3. Prepara o caractere para ser desenhado pelo DrawText
-            // DrawText precisa de uma string, então criamos uma string temporária de 2 caracteres:
-            // [caractere][caractere nulo '\0']
-            char bufferDeCaractere[2];
-            snprintf(bufferDeCaractere, sizeof(bufferDeCaractere), "%c", c);
-
-            // 4. Calcula a posição do caractere na tela
-            int posX = posXInicial + (j * espacamentoX);
-            int posY = posYInicial + (i * espacamentoY);
-
-            // 5. Desenha o caractere na tela
-            DrawText(bufferDeCaractere, posX, posY, tamanhoFonte, WHITE);
-        }
-    }
 }
 

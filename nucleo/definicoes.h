@@ -41,10 +41,24 @@ typedef struct {
     Texture2D sul;
     Texture2D leste;
     Texture2D oeste;
-} Texturas;
+} TexturasOri;
+
+typedef struct {
+    Texture2D cabo;
+    Texture2D meio;
+    Texture2D ponta;
+
+} TexturaAtaquePartes;
+
+typedef struct {
+    Texture2D var0;
+    Texture2D var1;
+
+} TexturasParede;
 
 typedef struct {
     Texture2D fundoinical;
+    Texture2D fundobasico;
 } TexturasMenu;
 
 typedef struct {
@@ -74,7 +88,7 @@ typedef struct {
     char nome[20];
     PosicaoGrade pos;
     Orientacao dir;
-    Texturas tex;
+    TexturasOri tex;
     Animacoes animtex;
     int vidas;
     int pontuacaoTotal;
@@ -82,6 +96,7 @@ typedef struct {
     int contatoMonstro; // bool
 
     TexturasEspada texEsp;
+    TexturaAtaquePartes texEspX;
     float instantesInvencibilidade;
     float instantesEspada;
     PosicaoGrade tilesAtaque[3];
@@ -96,16 +111,18 @@ typedef struct {
 typedef struct {
     PosicaoGrade pos;
     Orientacao dir;
-    Texturas tex;
+    TexturasOri tex;
     int pontuacao;
     int vivo; // bool
     int passosRestantes;
     float tempoParaMover;
+
 } Monstro;
 
 typedef struct {
     char mapa[16][24];
     int chaoVariacao[16][24];
+    int paredeVariacao[16][24];
     PosicaoGrade posInicialJogador;
     PosicaoGrade posInicialEspada;
     Monstro monstro[10];
@@ -115,7 +132,7 @@ typedef struct {
     PosicaoGrade vidasExtras[5];
     int vidasPegadas[5];
     int numVidasExtras;
-    Texturas tex;
+    TexturasParede texparede;
     Texture2D chao[2];
 } Mapa;
 

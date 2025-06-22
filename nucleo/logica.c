@@ -12,7 +12,7 @@ void processarLogica(Jogo *jogo) {
     if (jogo->estado == JOGANDO) {
         float deltaTime = GetFrameTime();
 
-        atualizarAnimacaoJogador(&jogo->jogador, deltaTime); // << CHAME AQUI
+        atualizarAnimacaoJogador(&jogo->jogador, deltaTime);
         moveMonstro(&jogo->jogador, jogo->mapa.monstro, jogo->mapa.numMonstrosInicial, &jogo->mapa, deltaTime);
 
         pegaEspada(&jogo->jogador, &jogo->mapa);

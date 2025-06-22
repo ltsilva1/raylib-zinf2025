@@ -46,10 +46,15 @@ void desenhaJogo(Jogo* meuJogo) {
 
 void desenhaCenario(Jogo* jogo) {
     for (int i = 0; i < 16; ++i)
-        for (int j = 0; j < 24; ++j) //revisar o 24 ou 25
-            if (jogo->mapa.mapa[i][j] == 'P')
-                DrawTexture(jogo->mapa.tex.sul, j * CASA, i * CASA + ALTURA_HUD, WHITE);
-            else {
+        for (int j = 0; j < 24; ++j)
+            if (jogo->mapa.mapa[i][j] == 'P') {
+                int parede = jogo->mapa.paredeVariacao[i][j];
+
+                if (parede == 0)
+                    DrawTexture(jogo->mapa.texparede.var0, j * CASA, i * CASA + ALTURA_HUD, WHITE);
+                else DrawTexture(jogo->mapa.texparede.var1, j * CASA, i * CASA + ALTURA_HUD, WHITE);
+
+            } else {
                 int mato = jogo->mapa.chaoVariacao[i][j];
 
                 if (mato == 0)
@@ -87,22 +92,6 @@ void desenhaMonstro(Jogo* jogo) {
     }
 }
 
-/*switch (jogo->jogador.dir) {
-    case CIMA:    texturaParaUsar = jogo->jogador.animtex.movTexNorte; break;
-    case BAIXO:   texturaParaUsar = jogo->jogador.animtex.movTexSul;   break;
-    case ESQUERDA:texturaParaUsar = jogo->jogador.animtex.movTexOeste;  break;
-    case DIREITA: texturaParaUsar = jogo->jogador.animtex.movTexLeste;  break;
-    default:      texturaParaUsar = jogo->jogador.animtex.movTexSul;
-}
-
-// Seleciona o SPRITE ESTÁTICO correto baseado na direção
-switch (jogo->jogador.dir) {
-    case CIMA:    texturaParaUsar = jogo->jogador.tex.norte; break;
-    case BAIXO:   texturaParaUsar = jogo->jogador.tex.sul;   break;
-    case ESQUERDA:texturaParaUsar = jogo->jogador.tex.oeste;  break;
-    case DIREITA: texturaParaUsar = jogo->jogador.tex.leste;  break;
-    default:      texturaParaUsar = jogo->jogador.tex.sul;
-} */
 
 // Em render.c
 void desenhaJogador(Jogo* jogo) {
@@ -185,27 +174,54 @@ void desenhaEspada(Jogo* jogo) {
     if (jogo->mapa.espadaPegada == 0)
         DrawTexture(jogo->espadaTex, jogo->mapa.posInicialEspada.x * CASA,
                   jogo->mapa.posInicialEspada.y * CASA + ALTURA_HUD, WHITE);
+
     if (jogo->jogador.instantesEspada > 0) {
-
-        Texture2D texturaAtaqueParaUsar;
-
-        // Escolhe qual dos 4 sprites de ataque usar com base na direção do jogador
-        switch (jogo->jogador.dir) {
-            case CIMA:    texturaAtaqueParaUsar = jogo->jogador.texEsp.ataqueTexNorte;  break;
-            case BAIXO:   texturaAtaqueParaUsar = jogo->jogador.texEsp.ataqueTexSul;    break;
-            case ESQUERDA:texturaAtaqueParaUsar = jogo->jogador.texEsp.ataqueTexOeste;  break;
-            case DIREITA: texturaAtaqueParaUsar = jogo->jogador.texEsp.ataqueTexLeste;  break;
-            default:      texturaAtaqueParaUsar = jogo->jogador.texEsp.ataqueTexSul;
-        }
-
         for (int k = 0; k < 3; ++k) {
-                // Calcula a posição em pixels para cada tile de ataque
-                int posX = jogo->jogador.tilesAtaque[k].x * CASA;
-                int posY = jogo->jogador.tilesAtaque[k].y * CASA + ALTURA_HUD;
+            // 1. Escolhe qual PARTE da espada desenhar (cabo, meio, ponta)
 
-                // Desenha o sprite do ataque na posição calculada
-                // Dica: Use Fade(WHITE, 0.7f) para um efeito semi-transparente!
-                DrawTexture(texturaAtaqueParaUsar, posX, posY, WHITE);
+            Texture2D texturaParteAtual;
+
+            switch (k) {
+                case 0: texturaParteAtual = jogo->jogador.texEspX.cabo; break;
+                case 1: texturaParteAtual = jogo->jogador.texEspX.meio; break;
+                case 2: texturaParteAtual = jogo->jogador.texEspX.ponta; break;
+                default: continue;
+            }
+
+            if (texturaParteAtual.id == 0) continue;
+
+            // 2. Define o retângulo de origem (a imagem inteira da parte)
+            Rectangle sourceRec = { 0.0f, 0.0f, (float)texturaParteAtual.width, (float)texturaParteAtual.height };
+
+            // 3. Define o retângulo de destino na tela (onde e com que tamanho desenhar)
+            Rectangle destRec = {
+                (float)jogo->jogador.tilesAtaque[k].x * CASA,
+                (float)jogo->jogador.tilesAtaque[k].y * CASA + ALTURA_HUD,
+                (float)CASA, // Largura do tile
+                (float)CASA  // Altura do tile
+            };
+
+            // 4. Define a rotação com base na direção do jogador
+            float rotation = 0.0f;
+            switch (jogo->jogador.dir) {
+                case CIMA:     rotation = 0.0f;   break; // Base, já aponta para cima
+                case DIREITA:  rotation = 90.0f;  break;
+                case BAIXO:    rotation = 180.0f; break;
+                case ESQUERDA: rotation = 270.0f; break; // 270 graus no sentido horário
+            }
+
+            // 5. Define o pivô da rotação (o ponto em torno do qual o sprite vai girar)
+            // Para girar em torno do centro do sprite, usamos metade da largura e altura.
+            Vector2 origin = { (float)CASA / 2.0f, (float)CASA / 2.0f };
+
+            // 6. Desenha com DrawTexturePro!
+            // Note que para a rotação funcionar bem, a posição no 'destRec' precisa ser ajustada.
+            // DrawTexturePro rotaciona o 'destRec' em torno do 'origin'.
+            // Para centralizar um sprite rotacionado, ajustamos o 'destRec'
+            destRec.x += CASA / 2.0f;
+            destRec.y += CASA / 2.0f;
+
+            DrawTexturePro(texturaParteAtual, sourceRec, destRec, origin, rotation, WHITE);
         }
     }
 }

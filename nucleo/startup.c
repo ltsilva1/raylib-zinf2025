@@ -39,9 +39,10 @@ void inicializarJogador(Jogo *jogo) {
     jogo->jogador.instantesInvencibilidade = 0;
 
 
-    // --- STATUS DA ANIMAÇÃO DE MOVIMENTO ---
+    // Status da animação de movimento do jogador
     jogo->jogador.estaSeMovendo = false; // ou 0
     jogo->jogador.progressoMovimento = 0.0f;
+
     // Define origem e destino para a posição inicial para evitar dados lixo
     jogo->jogador.posOrigem = jogo->jogador.pos;
     jogo->jogador.posDestino = jogo->jogador.pos;
@@ -51,6 +52,7 @@ void inicializarJogador(Jogo *jogo) {
 
 void carregarTexturas(Jogo* jogo) {
     jogo->menuTex.fundoinical = LoadTexture(".recursos/menu/fundoinicial.png");
+    jogo->menuTex.fundobasico = LoadTexture(".recursos/menu/fundobasico.png");
 
     jogo->jogador.tex.sul = LoadTexture(".recursos/jogador/jogador_baixo.png");
     jogo->jogador.tex.norte = LoadTexture(".recursos/jogador/jogador_cima.png");
@@ -66,8 +68,12 @@ void carregarTexturas(Jogo* jogo) {
     jogo->jogador.texEsp.ataqueTexSul = LoadTexture(".recursos/ataque/ataque_baixo.png");
     jogo->jogador.texEsp.ataqueTexLeste = LoadTexture(".recursos/ataque/ataque_direita.png");
     jogo->jogador.texEsp.ataqueTexOeste = LoadTexture(".recursos/ataque/ataque_esquerda.png");
+    jogo->jogador.texEspX.cabo = LoadTexture(".recursos/ataque/espada_cabo.png");
+    jogo->jogador.texEspX.meio = LoadTexture(".recursos/ataque/espada_meio.png");
+    jogo->jogador.texEspX.ponta = LoadTexture(".recursos/ataque/espada_ponta.png");
 
-    jogo->mapa.tex.sul = LoadTexture(".recursos/paredes/parede.png");
+    jogo->mapa.texparede.var0 = LoadTexture(".recursos/paredes/arbustoparede.png");
+    jogo->mapa.texparede.var1 = LoadTexture(".recursos/paredes/arbustoparede_deserto.png");
 
     jogo->mapa.chao[0] = LoadTexture(".recursos/chao/chao_placeholder.png");
     jogo->mapa.chao[1] = LoadTexture(".recursos/chao/chao_semmato.png");
@@ -87,7 +93,6 @@ void inicializarMonstrons(Jogo* jogo) {
         jogo->mapa.monstro[i].tex.oeste = LoadTexture(".recursos/inimigos/inimigo_direita.png");
         jogo->mapa.monstro[i].tex.leste = LoadTexture(".recursos/inimigos/inimigo_esquerda.png");
 
-        // --- A CORREÇÃO CRÍTICA ESTÁ AQUI ---
         // Garante que o monstro não está no meio de uma sequência de passos quando começa
         jogo->mapa.monstro[i].passosRestantes = 0;
 
