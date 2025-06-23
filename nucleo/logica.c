@@ -22,6 +22,7 @@ void processarLogica(Jogo *jogo) {
         danoJogador(&jogo->jogador, jogo->mapa.monstro);
 
         if (jogo->jogador.vidas <= 0) {
+            jogo->jogador.vivo = false;
             if (jogo->jogador.pontuacaoTotal > jogo->score[5 - 1].score) {
                 // Se for, muda para a tela de entrada de nome
                 jogo->estado = ENTRANDO_NOME_RANKING;

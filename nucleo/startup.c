@@ -24,7 +24,9 @@ void Inicializar(Jogo *jogo) {
 }
 void inicializarJogador(Jogo *jogo) {
     // Status básicos
+    jogo->jogador.pontuacaoTotal = 0;
     jogo->jogador.vidas = 3;
+    jogo->jogador.vivo = true;
     jogo->jogador.dir = BAIXO;
     jogo->jogador.pos.x = jogo->mapa.posInicialJogador.x;
     jogo->jogador.pos.y = jogo->mapa.posInicialJogador.y;

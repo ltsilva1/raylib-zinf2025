@@ -24,7 +24,7 @@ endif()
 
 # Our Project
 
-add_executable(${PROJECT_NAME} main.c
+add_executable(${PROJECT_NAME} WIN32 main.c
         nucleo/definicoes.h
         game/mapa/mapa.c
         game/mapa/mapa.h

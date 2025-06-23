@@ -94,6 +94,7 @@ typedef struct {
     int pontuacaoTotal;
     bool temEspada;
     bool contatoMonstro; // Acho que não foi usado
+    bool vivo;
 
     TexturaAtaquePartes texEsp;
     float instantesInvencibilidade;

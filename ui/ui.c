@@ -45,11 +45,6 @@ void DesenhaMenuPrincipal(Jogo* jogo) {
                      tamanhoFonteOpcao,
                      cor);
         }
-
-        // Instrução
-        DrawText("Use as SETAS e ENTER para selecionar",
-                 1200 / 2 - MeasureText("Use as SETAS e ENTER para selecionar", 20) / 2,
-                 770, 20, LIGHTGRAY);
     }
 
 void desenhaHUD(Jogo* jogo) {
@@ -109,14 +104,14 @@ void DesenhaPause(Jogo* jogo) {
     DrawRectangle(posXMenu, posYMenu, larguraMenu, alturaMenu, Fade(BLACK, 0.2f));
     DrawRectangleLines(posXMenu, posYMenu, larguraMenu, alturaMenu, LIGHTGRAY);
 
-    // --- 2. O Título ---
-    const char* titulo = "< PAUSADO >";
+    //  O Título
+    char* titulo = "< PAUSADO >";
     int larguraTitulo = MeasureText(titulo, 50);
     DrawText(titulo, LARGURA / 2 - larguraTitulo / 2, posYMenu + 30, 50, WHITE);
 
     // --- 3. As Opções do Menu (parecido com o seu DesenhaGameOver) ---
     // Conforme o PDF do projeto, as opções são "Continuar", "Voltar ao Menu", "Sair".
-    const char* opcoesTexto[3] = {
+    char* opcoesTexto[3] = {
         "Continuar",
         "Voltar ao Menu",
         "Sair do Jogo"
@@ -234,11 +229,11 @@ void DesenhaVitoria(Jogo* jogo) {
 void DesenhaTelaEntradaNome(Jogo* jogo) {
     ClearBackground(BLACK);
 
-    const char* titulo = "< VITORIA >"; //TROCAR PRA NÃO FICAR DESCARADO!!!!!!
+    char* titulo = "< VITORIA >";
     int larguraTitulo = MeasureText(titulo, 120); // Mede a largura do texto para centralizar
 
-
-    DrawText(titulo, 1200 / 2 - larguraTitulo / 2, 100, 120, YELLOW);
+    if (jogo->jogador.vivo == true)
+        DrawText(titulo, 1200 / 2 - larguraTitulo / 2, 100, 120, YELLOW);
 
 
     DrawText("NOVO RECORDE!", 1200 / 2 - MeasureText("NOVO RECORDE!", 40) / 2, 250 + 50, 40, GOLD);
