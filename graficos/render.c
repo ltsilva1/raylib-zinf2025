@@ -15,6 +15,7 @@ void desenhaJogo(Jogo* meuJogo) {
     BeginDrawing();
     switch (meuJogo->estado) {
         case JOGANDO:
+            // Renderiza os elementos do jogo
             ClearBackground(RAYWHITE);
             desenhaHUD(meuJogo);
             desenhaCenario(meuJogo);
@@ -24,29 +25,29 @@ void desenhaJogo(Jogo* meuJogo) {
             desenhaMonstro(meuJogo);
             break;
         case MENU:
-            DesenhaMenuPrincipal(meuJogo);
+            DesenhaMenuPrincipal(meuJogo); // Renderiza o menu principal
             break;
         case FIM_DE_JOGO:
-            DesenhaGameOver(meuJogo);
+            DesenhaGameOver(meuJogo); // Renderiza a tela de fim de jogo
             break;
         case PAUSADO:
-            DesenhaPause(meuJogo);
+            DesenhaPause(meuJogo); // Renderiza a tela de pausa
             break;
         case VITORIA:
-            DesenhaVitoria(meuJogo);
+            DesenhaVitoria(meuJogo); // Renderiza a tela de vitória normal (sem recorde)
             break;
         case SCOREBOARDS_TABELA:
-            DesenhaPlacar(meuJogo);
+            DesenhaPlacar(meuJogo); // Renderiza a tela de placares
             break;
         case ENTRANDO_NOME_RANKING:
-            DesenhaTelaEntradaNome(meuJogo);
+            DesenhaTelaEntradaNome(meuJogo); // Renderiza a tela de inserir nome para o placar (recorde novo)
             break;
 
     }
     EndDrawing();
 }
 
-void desenhaCenario(Jogo* jogo) {
+void desenhaCenario(Jogo* jogo) {  // Desenha a variante correta da parede/chão estabelecidas na leitura do mapa
     for (int i = 0; i < 16; ++i)
         for (int j = 0; j < 24; ++j)
             if (jogo->mapa.mapa[i][j] == 'P') {
@@ -65,7 +66,7 @@ void desenhaCenario(Jogo* jogo) {
             }
 }
 
-void desenhaMonstro(Jogo* jogo) {
+void desenhaMonstro(Jogo* jogo) { // Desenha os monstros ainda vivos
     for (int i = 0; i < 10; ++i) {
         if (jogo->mapa.monstro[i].vivo == 1) {
             Texture2D texturaAtual;
@@ -75,9 +76,10 @@ void desenhaMonstro(Jogo* jogo) {
                 jogo->mapa.monstro[i].pos.y * CASA + 1 + ALTURA_HUD
             };
 
-            switch (jogo->mapa.monstro[i].dir) { // As texturas tão sendo carregadas toda hora, precisa mudar isso aqui
+            // Seleciona a textura adequada a ser desenhada pela orientação do monstro
+            switch (jogo->mapa.monstro[i].dir) {
                 case CIMA:
-                    texturaAtual = jogo->monstrosTex.norte; // endereço textura pra cima;
+                    texturaAtual = jogo->monstrosTex.norte;
                     break;
                 case BAIXO:
                     texturaAtual = jogo->monstrosTex.sul;
@@ -89,30 +91,28 @@ void desenhaMonstro(Jogo* jogo) {
                     texturaAtual = jogo->monstrosTex.oeste;
                     break;
             }
+
             DrawTextureV(texturaAtual, posicaoMonstro, WHITE);
         }
     }
 }
 
 
-// Em render.c
 void desenhaJogador(Jogo* jogo) {
-    // Pisca quando invencível
-    if (jogo->jogador.instantesInvencibilidade > 0) {
-        if (fmodf(GetTime(), 0.2f) < 0.1f) {
+    if (jogo->jogador.instantesInvencibilidade > 0) { // Pisca quando invencível
+        if (fmodf(GetTime(), 0.2f) < 0.1f) { // fmodf calcula o resto da divisão de um float (CINEMA!!!!)
             return;
         }
     }
 
     Texture2D texturaParaUsar;
-    Rectangle sourceRec;
+    Rectangle sourceRec; // Esse retângulo nos ajudará a desenhar o sprite correto na spritesheet (feature da raylib)
     float offsetX = 0.0f;
     float offsetY = 0.0f;
 
     // Decide qual textura, "source" e offset usar
     if (jogo->jogador.estaSeMovendo) {
         // Caso o jogador esteja no meio do movimento
-
         switch (jogo->jogador.dir) {
             case CIMA:    texturaParaUsar = jogo->jogador.animtex.movTexNorte; break;
             case BAIXO:   texturaParaUsar = jogo->jogador.animtex.movTexSul;   break;
@@ -158,7 +158,7 @@ void desenhaJogador(Jogo* jogo) {
         Vector2 posDestinoPx = { (float)jogo->jogador.posDestino.x * CASA, (float)jogo->jogador.posDestino.y * CASA };
         float percentualCompleto = jogo->jogador.progressoMovimento / DURACAO_MOVIMENTO;
         if (percentualCompleto > 1.0f) percentualCompleto = 1.0f;
-        posicaoVisualEmPixels = Vector2Lerp(posOrigemPx, posDestinoPx, percentualCompleto);
+        posicaoVisualEmPixels = Vector2Lerp(posOrigemPx, posDestinoPx, percentualCompleto); // Lerp = interpolação
     } else {
         posicaoVisualEmPixels.x = (float)jogo->jogador.pos.x * CASA;
         posicaoVisualEmPixels.y = (float)jogo->jogador.pos.y * CASA;
@@ -179,10 +179,10 @@ void desenhaEspada(Jogo* jogo) {
 
     if (jogo->jogador.instantesEspada > 0) {
         for (int k = 0; k < 3; ++k) {
-            // 1. Escolhe qual PARTE da espada desenhar (cabo, meio, ponta)
 
             Texture2D texturaParteAtual;
 
+            // Escolhe qual PARTE da espada desenhar (cabo, meio, ponta)
             switch (k) {
                 case 0: texturaParteAtual = jogo->jogador.texEsp.cabo; break;
                 case 1: texturaParteAtual = jogo->jogador.texEsp.meio; break;
@@ -190,12 +190,10 @@ void desenhaEspada(Jogo* jogo) {
                 default: continue;
             }
 
-            if (texturaParteAtual.id == 0) continue;
-
-            // 2. Define o retângulo de origem (a imagem inteira da parte)
+            // Define o retângulo de origem (a imagem inteira da parte)
             Rectangle sourceRec = { 0.0f, 0.0f, (float)texturaParteAtual.width, (float)texturaParteAtual.height };
 
-            // 3. Define o retângulo de destino na tela (onde e com que tamanho desenhar)
+            // Define o retângulo de destino na tela (onde e com que tamanho desenhar)
             Rectangle destRec = {
                 (float)jogo->jogador.tilesAtaque[k].x * CASA,
                 (float)jogo->jogador.tilesAtaque[k].y * CASA + ALTURA_HUD,
@@ -203,7 +201,7 @@ void desenhaEspada(Jogo* jogo) {
                 (float)CASA  // Altura do tile
             };
 
-            // 4. Define a rotação com base na direção do jogador
+            // Define a rotação com base na direção do jogador
             float rotation = 0.0f;
             switch (jogo->jogador.dir) {
                 case CIMA:     rotation = 0.0f;   break; // Base, já aponta para cima
@@ -212,15 +210,11 @@ void desenhaEspada(Jogo* jogo) {
                 case ESQUERDA: rotation = 270.0f; break; // 270 graus no sentido horário
             }
 
-            // 5. Define o pivô da rotação (o ponto em torno do qual o sprite vai girar)
-            // Para girar em torno do centro do sprite, usamos metade da largura e altura.
-            Vector2 origin = { (float)CASA / 2.0f, (float)CASA / 2.0f };
+            // Define o pivô da rotação (o ponto em torno do qual o sprite vai girar)
+            Vector2 origin = { (float)CASA / 2.0f, (float)CASA / 2.0f }; // Para girar em torno do centro do sprite, usamos metade da largura e altura.
 
-            // 6. Desenha com DrawTexturePro!
-            // Note que para a rotação funcionar bem, a posição no 'destRec' precisa ser ajustada.
-            // DrawTexturePro rotaciona o 'destRec' em torno do 'origin'.
-            // Para centralizar um sprite rotacionado, ajustamos o 'destRec'
-            destRec.x += CASA / 2.0f;
+
+            destRec.x += CASA / 2.0f; // Para centralizar o sprite rotacionado
             destRec.y += CASA / 2.0f;
 
             DrawTexturePro(texturaParteAtual, sourceRec, destRec, origin, rotation, WHITE);
@@ -228,7 +222,7 @@ void desenhaEspada(Jogo* jogo) {
     }
 }
 
-void desenhaVida(Jogo* jogo) {
+void desenhaVida(Jogo* jogo) { // Desenha as vidas ainda não pegas
     for (int i = 0; i < jogo->mapa.numVidasExtras; ++i)
         if (jogo->mapa.vidasPegadas[i] == 0)
             DrawTexture(jogo->itemTex.vidaTex, jogo->mapa.vidasExtras[i].x * CASA,

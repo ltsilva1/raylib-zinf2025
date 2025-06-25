@@ -55,30 +55,30 @@ void processarEntrada(Jogo *jogo) {
                 }
             }
 
-                if (IsKeyPressed(KEY_J))
+                if (IsKeyPressed(KEY_J)) // Ataque da espada
                     if (jogo->jogador.temEspada == true)
                         jogo->jogador.instantesEspada = 0.5f;
-                if (IsKeyPressed(KEY_TAB)) {jogo->estado = PAUSADO;}
+                if (IsKeyPressed(KEY_TAB)) {jogo->estado = PAUSADO;} // Pausar o jogo
             break;
 
         case MENU:
-            if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S))
+            if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S)) // Guarda de navegação do menu
                 if (jogo->seletorMenu < 2)
                     jogo->seletorMenu += 1;
             if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W))
                 if (jogo->seletorMenu > 0)
                     jogo->seletorMenu -= 1;
 
-            if (IsKeyPressed((KEY_ENTER))) {
+            if (IsKeyPressed((KEY_ENTER))) { // Seleção do menu principal
                 switch (jogo->seletorMenu) {
-                    case 0:
+                    case 0: // Novo Jogo
                         Inicializar(jogo);
                         jogo->estado = JOGANDO;
                         break;
-                    case 1:
+                    case 1: // Scoreboard
                         jogo->estado = SCOREBOARDS_TABELA;
                         break;
-                    case 2:
+                    case 2: // Sair do Jogo
                         CloseWindow();
                         break;
                 }
@@ -86,20 +86,20 @@ void processarEntrada(Jogo *jogo) {
             break;
 
         case FIM_DE_JOGO:
-            if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S))
+            if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S)) // Guarda de navegação do menu
                 if (jogo->seletorMenu < 1)
                     jogo->seletorMenu += 1;
             if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W))
                 if (jogo->seletorMenu > 0)
                     jogo->seletorMenu -= 1;
 
-            if (IsKeyPressed((KEY_ENTER))) {
+            if (IsKeyPressed((KEY_ENTER))) { // Seleção da tela de fim de jogo
                 switch (jogo->seletorMenu) {
-                    case 0:
+                    case 0: // Reiniciar Jogo
                         Inicializar(jogo);
                         jogo->estado = JOGANDO;
                         break;
-                    case 1:
+                    case 1: // Voltar ao Menu
                         Inicializar(jogo);
                         break;
                 }
@@ -107,11 +107,11 @@ void processarEntrada(Jogo *jogo) {
             break;
 
         case SCOREBOARDS_TABELA:
-            if (IsKeyPressed(KEY_ENTER)) {jogo->estado = MENU;}
+            if (IsKeyPressed(KEY_ENTER)) {jogo->estado = MENU;} // Voltar ao Menu
             break;
 
         case PAUSADO:
-            if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S))
+            if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S)) // Guarda de navegação do menu
                 if (jogo->seletorMenu < 2)
                     jogo->seletorMenu += 1;
             if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W))
@@ -138,7 +138,7 @@ void processarEntrada(Jogo *jogo) {
             break;
 
         case ENTRANDO_NOME_RANKING:
-            int tecla = GetCharPressed();
+            int tecla = GetCharPressed(); // Inteiro para comportar qualquer caractere
 
             // Processa todas as teclas na fila da Raylib
             while (tecla > 0) {
@@ -151,7 +151,7 @@ void processarEntrada(Jogo *jogo) {
                 tecla = GetCharPressed(); // Pega a próxima tecla na fila
             }
 
-            // Verifica a tecla BACKSPACE para apagar
+            // Verifica a tecla Backspace para apagar
             if (IsKeyPressed(KEY_BACKSPACE)) {
                 if (jogo->contadorNome > 0) {
                     jogo->contadorNome--;
@@ -159,7 +159,7 @@ void processarEntrada(Jogo *jogo) {
                 }
             }
 
-            // Verifica a tecla ENTER para confirmar
+            // Verifica a tecla Enter para confirmar
             if (IsKeyPressed(KEY_ENTER)) {
                 if (jogo->contadorNome == 0) { // Se não digitou nada, usa um nome padrão
                     snprintf(jogo->nomeBuffer, MAX_NOME_JOGADOR, "Anonimo");
@@ -171,13 +171,13 @@ void processarEntrada(Jogo *jogo) {
                 ordenaPlacar(jogo->score);
                 salvaPlacar(jogo);
 
-                // Muda para a tela de placar ou de game over para mostrar o resultado
+                // Muda para a tela de placar para mostrar o resultado
                 jogo->estado = SCOREBOARDS_TABELA;
             }
             break;
 
         case VITORIA:
-            if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S))
+            if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S)) // Guarda de navegação do menu
                 if (jogo->seletorMenu < 1)
                     jogo->seletorMenu += 1;
             if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W))
@@ -186,11 +186,11 @@ void processarEntrada(Jogo *jogo) {
 
             if (IsKeyPressed((KEY_ENTER))) {
                 switch (jogo->seletorMenu) {
-                    case 0:
+                    case 0: // Reiniciar Jogo
                         Inicializar(jogo);
                         jogo->estado = JOGANDO;
                         break;
-                    case 1:
+                    case 1: // Voltar ao Menu
                         Inicializar(jogo);
                         break;
                 }
@@ -198,10 +198,10 @@ void processarEntrada(Jogo *jogo) {
     }
 }
 
-int PosicaoValida(Mapa* mapa, int x, int y) { //Se a posição for inválida returna 0, se for válida, retorna 1.
-    if ((x < 0 || x > 24) || (y < 0 || y > 16))
+int PosicaoValida(Mapa* mapa, int x, int y) { // Se a posição for inválida returna 0, se for válida, retorna 1.
+    if ((x < 0 || x > 24) || (y < 0 || y > 16)) // Testa se está fora do mapa
         return 0;
-    if (mapa->mapa[y][x] == 'P')
+    if (mapa->mapa[y][x] == 'P') // Testa se é uma parede
         return 0;
     return 1;
 }

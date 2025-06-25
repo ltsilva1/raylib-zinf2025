@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-void salvaPlacar (Jogo* jogo) {
+void salvaPlacar (Jogo* jogo) { // Salva o placar do jogo no arquivo binário
     FILE* f;
 
     f = fopen("ranking.bin", "wb");
@@ -16,14 +16,14 @@ void salvaPlacar (Jogo* jogo) {
     fclose(f);
 }
 
-void lePlacar (Jogo* jogo) {
+void lePlacar (Jogo* jogo) { // Lê o placar do arquivo binário para o jogo
     FILE* f;
 
     f = fopen("ranking.bin", "rb");
 
-    if (f == NULL) {
+    if (f == NULL) { // Caso o arquivo não exista, carrega para o jogo um placar genérico
         for (int i = 0; i < 5; ++i) {
-            snprintf(jogo->score[i].nome, 20, "Jogador %d", 1 + i);
+            sprintf(jogo->score[i].nome, "Desafiante %d", 1 + i);
             jogo->score[i].score = 0;
         }
         salvaPlacar(jogo);
@@ -33,10 +33,10 @@ void lePlacar (Jogo* jogo) {
     fclose(f);
 }
 
-void ordenaPlacar(Score placar[]) {
+void ordenaPlacar(Score placar[]) { // Ordena o placar do jogo
     Score aux;
 
-    for (int j = 0; j < 5 - 1; j++) {
+    for (int j = 0; j < 5 - 1; j++) { // bubble-sort
         for (int i = 0; i < 5 - 1 - j; i++) {
             if (placar[i].score < placar[i+1].score) {
                 aux = placar[i];
@@ -47,29 +47,19 @@ void ordenaPlacar(Score placar[]) {
     }
 }
 
-void atualizaPlacar (Jogo* jogo) {
+void atualizaPlacar (Jogo* jogo) { // Atualiza o placar do jogo em caso de novo recorde
     if (jogo->jogador.pontuacaoTotal > jogo->score[5-1].score) {
-        printf("--- ATUALIZANDO PLACAR ---\n"); //
-        printf("Placar ANTES da atualizacao:\n");//
-        for (int k=0; k<5; k++) { printf("  %d. %s - %d\n", k, jogo->score[k].nome, jogo->score[k].score); } //
 
-        snprintf(jogo->score[5 - 1].nome, 20, "HEROI");
         jogo->score[5 - 1].score = jogo->jogador.pontuacaoTotal;
 
-        printf("Placar APOS inserir novo score (antes de ordenar):\n"); //
-        for (int k=0; k<5; k++) { printf("  %d. %s - %d\n", k, jogo->score[k].nome, jogo->score[k].score); } //
         ordenaPlacar(jogo->score);
 
-        printf("Placar APOS ordenar:\n");//
-        for (int k=0; k<5; k++) { printf("  %d. %s - %d\n", k, jogo->score[k].nome, jogo->score[k].score); } //
         salvaPlacar(jogo);
-        printf("--------------------------\n"); //
+
     }
-
-
 }
 
-int EhNovoRecorde(const Jogo* jogo) {
+int EhNovoRecorde(const Jogo* jogo) { // Função genérica para testar novo recorde
     if (jogo->jogador.pontuacaoTotal > jogo->score[5 - 1].score) {
         return 1;
     }

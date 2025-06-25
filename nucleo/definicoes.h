@@ -6,7 +6,7 @@
 #define CASA 50
 #define ALTURA_HUD 60
 #define MAX_NOME_JOGADOR 20
-#define DURACAO_MOVIMENTO 0.12f // Duração em segundos para mover uma casa. (Ajustar)
+#define DURACAO_MOVIMENTO 0.12f // Duração em segundos para mover uma casa.
 #define JOGADOR_NUM_FRAMES 7       // 7 frames de animação por direção
 #define JOGADOR_TEMPO_POR_FRAME 0.1f //Animação troca de frame a cada 0.1 segundos
 
@@ -16,12 +16,12 @@
 #ifndef DEFINICOES_H
 #define DEFINICOES_H
 
-typedef struct {
+typedef struct { // Estrutura básica de scores
     char nome[20];
     int score;
 } Score;
 
-typedef enum {
+typedef enum { // Conjunto de estados do jogo
     JOGANDO,
     MENU,
     PAUSADO,
@@ -31,52 +31,47 @@ typedef enum {
     ENTRANDO_NOME_RANKING
 } Estado;
 
-typedef struct {
+typedef struct { // Estrutura de posição de determinado elemento na grade
     int x;
     int y;
 } PosicaoGrade;
 
-typedef struct {
+typedef struct { // Estrutura com texturas para cada orientação do jogador/monstro
     Texture2D norte;
     Texture2D sul;
     Texture2D leste;
     Texture2D oeste;
-
 } TexturasOri;
 
-typedef struct {
+typedef struct { // Estrutura com texturas para cada parte da espada
     Texture2D cabo;
     Texture2D meio;
     Texture2D ponta;
-
 } TexturaAtaquePartes;
 
-typedef struct {
+typedef struct { // Estrutura com textura dos items do jogo
     Texture2D vidaTex;
     Texture2D espadaTex;
-
 } TexturasItens;
 
-typedef struct {
+typedef struct { // Estrutura com textura das variantes das paredes
     Texture2D var0;
     Texture2D var1;
-
 } TexturasParede;
 
-typedef struct {
+typedef struct { // Estrutura com textura dos fundos dos menus
     Texture2D fundoinical;
     Texture2D fundobasico;
-
 } TexturasMenu;
 
-typedef struct {
+typedef struct { // Estrutura com textura das animações da spritesheet
     Texture2D movTexNorte;
     Texture2D movTexSul;
     Texture2D movTexLeste;
     Texture2D movTexOeste;
 } Animacoes;
 
-typedef enum {
+typedef enum { // Conjunto de orientações
     CIMA,
     BAIXO,
     ESQUERDA,
@@ -84,7 +79,8 @@ typedef enum {
 } Orientacao;
 
 
-typedef struct {
+typedef struct { // Estrutura principal do jogador
+    // Características básicas
     char nome[20];
     PosicaoGrade pos;
     Orientacao dir;
@@ -93,14 +89,15 @@ typedef struct {
     int vidas;
     int pontuacaoTotal;
     bool temEspada;
-    bool contatoMonstro; // Acho que não foi usado
     bool vivo;
 
+    // Elementos de combate
     TexturaAtaquePartes texEsp;
     float instantesInvencibilidade;
     float instantesEspada;
     PosicaoGrade tilesAtaque[3];
 
+    // Elementos de animação
     bool estaSeMovendo; // 0 para parado, 1 para se movendo
     PosicaoGrade posOrigem; // De qual casa o movimento começou
     PosicaoGrade posDestino; // Para qual casa o movimento vai
@@ -109,17 +106,16 @@ typedef struct {
     int frameAtual;
 } Jogador;
 
-typedef struct {
+typedef struct { // Estrutura principal do monstro
     PosicaoGrade pos;
     Orientacao dir;
     int pontuacao;
-    int vivo; // bool
+    bool vivo;
     int passosRestantes;
     float tempoParaMover;
-
 } Monstro;
 
-typedef struct {
+typedef struct { // Estrutura principal do mapa atual
     char mapa[16][24];
     int chaoVariacao[16][24];
     int paredeVariacao[16][24];
@@ -136,7 +132,7 @@ typedef struct {
     Texture2D chao[2];
 } Mapa;
 
-typedef struct {
+typedef struct { // Estrutura central do programa (maior parte das funções a utiliza como parâmetro)
     Estado estado;
     Score score[5];
     int seletorMenu;
@@ -147,7 +143,8 @@ typedef struct {
     TexturasItens itemTex;
     TexturasMenu menuTex;
     bool modoDebug;
-    // { CAMPOS PARA INPUT DE NOME }
+
+    // CAMPOS PARA INPUT DE NOME
     char nomeBuffer[MAX_NOME_JOGADOR + 1]; // Buffer para guardar o nome (+1 para o '\0')
     int contadorNome; // Quantos caracteres já foram digitados
 } Jogo;

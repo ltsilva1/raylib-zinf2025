@@ -7,11 +7,12 @@
 #include "graficos/render.h"
 #include "input/processarEntrada.h"
 #include "nucleo/logica.h"
+#include "antirender.h"
 
 int main() {
 	Jogo zinf;
 
-	InitWindow(LARGURA, ALTURA, "Morde & Assopra"); //Inicializa janela, com certo tamanho e titulo
+	InitWindow(LARGURA, ALTURA, "Morde & Assopra"); // Inicializa janela, com certo tamanho e titulo
 	SetTargetFPS(60);// Ajusta a janela para 60 frames por segundo
 
 	/* Inicializa a nossa estrutura principal, carregando o mapa, texturas
@@ -30,6 +31,7 @@ int main() {
 
 	}
 
+	descarregarTexturas(&zinf); // Libera as texturas carregadas
 	CloseWindow(); // Fecha a janela
 	return 0;
 	}

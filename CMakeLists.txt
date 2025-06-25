@@ -47,7 +47,9 @@ add_executable(${PROJECT_NAME} WIN32 main.c
         game/jogador/jogador.c
         game/jogador/jogador.h
         game/jogador/espada.c
-        game/jogador/espada.h)
+        game/jogador/espada.h
+        graficos/antirender.c
+        graficos/antirender.h)
 #set(raylib_VERBOSE 1)
 target_link_libraries(${PROJECT_NAME} raylib)
 

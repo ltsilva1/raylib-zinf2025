@@ -11,24 +11,22 @@
 
 void moveJogador(Jogador* jogador, Mapa* mapa, int direcaoX, int direcaoY) {
     if (jogador->estaSeMovendo) // Só permite um novo movimento se o jogador não estiver se movendo
-        return;                        // Retorna, caso já esteja
+        return;                 // Retorna, caso já esteja
 
         int proximaPosicaoX = jogador->pos.x + direcaoX;
         int proximaPosicaoY = jogador->pos.y + direcaoY;
 
-        if (PosicaoValida(mapa, proximaPosicaoX, proximaPosicaoY)) { //Testa a colisão
-            // Começa a animação
-            jogador->estaSeMovendo = true;                // 1. Marca que está em movimento
-            jogador->posOrigem = jogador->pos;            // 2. Guarda de onde saiu
-            jogador->posDestino.x = proximaPosicaoX;      // 3. Define para onde vai
-            jogador->posDestino.y = proximaPosicaoY;
-            jogador->progressoMovimento = 0.0f;           // 4. Zera o timer da animação
+        if (PosicaoValida(mapa, proximaPosicaoX, proximaPosicaoY)) { // Começa a animação
+            jogador->estaSeMovendo = true;                           // Marca que está em movimento
+            jogador->posOrigem = jogador->pos;                       // Guarda de onde saiu
+            jogador->posDestino.x = proximaPosicaoX;                 // Define para onde vai em x
+            jogador->posDestino.y = proximaPosicaoY;                 // Define para onde vai em y
+            jogador->progressoMovimento = 0.0f;                      // Zera o timer da animação
         }
     }
 
 void atualizarAnimacaoJogador(Jogador* jogador, float deltaTime) {
-    // Se o jogador não está se movendo, não há nada a fazer
-    if (!jogador->estaSeMovendo) {
+    if (!jogador->estaSeMovendo) { // Se o jogador não está se movendo, não faz nada
         return;
     }
 
@@ -39,44 +37,42 @@ void atualizarAnimacaoJogador(Jogador* jogador, float deltaTime) {
     float percentualProgresso = jogador->progressoMovimento / DURACAO_MOVIMENTO;
     jogador->frameAtual = (int)(percentualProgresso * JOGADOR_NUM_FRAMES) % JOGADOR_NUM_FRAMES;
 
-    // Verifica se a animação terminou
-    if (jogador->progressoMovimento >= DURACAO_MOVIMENTO) {
+    // Parada da animação
+    if (jogador->progressoMovimento >= DURACAO_MOVIMENTO) { // (Maior igual por conta da imprecisão do float)
         jogador->estaSeMovendo = false;       // Marca que parou de se mover
-        jogador->pos = jogador->posDestino; // "Trava" a posição lógica na casa de destino
-        jogador->frameAtual = 0; // Volta para o frame de "parado"
+        jogador->pos = jogador->posDestino;   // "Trava" a posição lógica na casa de destino
+        jogador->frameAtual = 0;              // Volta para o frame de "parado"
     }
-
-
 
 }
 
-void pegaEspada(Jogador* jogador, Mapa* mapa) {
+void pegaEspada(Jogador* jogador, Mapa* mapa) { // Pega a espada e tira do mapa
     if (jogador->pos.x == mapa->posInicialEspada.x && jogador->pos.y == mapa->posInicialEspada.y) {
         jogador->temEspada = true;
-        mapa->espadaPegada = 1;
+        mapa->espadaPegada = true;
 
     }
 }
 
-void pegaVida(Jogador* jogador, Mapa* mapa) {
-    for (int i = 0; i < mapa->numVidasExtras; i++) {
+void pegaVida(Jogador* jogador, Mapa* mapa) { // Pega a vida e tira do mapa
+    for (int i = 0; i < mapa->numVidasExtras; i++) { // Loop até a quantidade de vidas no mapa
         if (mapa->vidasPegadas[i] == 0 && jogador->pos.x == mapa->vidasExtras[i].x && jogador->pos.y == mapa->vidasExtras[i].y) {
             jogador->vidas += 1;
-            mapa->vidasPegadas[i] = 1;
+            mapa->vidasPegadas[i] = 1; // 1 = Vida pegada; 2 = Vida no chão
         }
     }
 }
 
 void danoJogador(Jogador* jogador, Monstro monstro[]) {
-    int numMonstro = 10; // TEMPORÁRIO
+    int numMonstroMax = 10; // Não pega lixo de memória, pois os monstros que não serão utilizados já foram limpos
 
     if (jogador->instantesInvencibilidade > 0)
         return;
 
-    for (int i = 0; i < numMonstro; ++i) {
+    for (int i = 0; i < numMonstroMax; ++i) {
             if (monstro[i].vivo == 1 && (jogador->pos.x == monstro[i].pos.x && jogador->pos.y == monstro[i].pos.y)) {
                 --jogador->vidas;
-                jogador->instantesInvencibilidade = 1.5f;
+                jogador->instantesInvencibilidade = 1.5f; // Deixa o jogador invencível por um curto período ao tomar dano
                 break;
             }
     }
